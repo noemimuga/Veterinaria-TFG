@@ -10,40 +10,46 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+
+
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    protected $table = 'usuarios';
     protected $fillable = [
-        'name',
+        'nombre',
         'email',
         'password',
+        'tipo',
+        'comunidad_autonoma',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    //Un refugio puede tener muchos animales
+    public function animales()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(Animal::class, 'refugio_id');
+    }
+
+    //Un usuario puede hacer muchas solicitudes
+    public function solicitudes()
+    {
+        return $this->hasMany(Solicitud::class, 'usuario_id');
+    }
+
+
+    //HELPERS
+    //Devuelve true si es un refugio false si no. Ayuda a tener un código más limpio,legible y evitar errores
+    public function esRefugio()
+    {
+        return $this->tipo === 'refugio';
+    }
+
+    public function esUsuario()
+    {
+        return $this->tipo === 'usuario';
     }
 }

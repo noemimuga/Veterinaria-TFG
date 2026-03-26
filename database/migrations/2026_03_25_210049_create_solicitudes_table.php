@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('animal_id')->constrained('animales')->onDelete('cascade');
+            $table->enum('estado', ['pendiente', 'aceptada', 'rechazada'])->default('pendiente');
+            $table->text('mensaje');
             $table->timestamps();
         });
+
     }
 
     /**
