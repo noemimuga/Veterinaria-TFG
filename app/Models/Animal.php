@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Animal extends Model
 {
     //
+     use HasFactory;
 
   protected $table = 'animales';
 
@@ -15,6 +17,7 @@ class Animal extends Model
         'especie',
         'raza',
         'edad',
+        'sexo',
         'descripcion',
         'foto',
         'refugio_id',

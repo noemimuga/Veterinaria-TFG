@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('especie');
             $table->string('raza')->nullable();
             $table->integer('edad');
-            $table->integer('sexo');
+            $table->string('sexo')->default('Desconocido');
             $table->text('descripcion');
             $table->string('foto')->nullable();
+            $table->string('estado')->default('disponible');
 
             /**
              * colmuna refugio_id -  apunta a otro registro.

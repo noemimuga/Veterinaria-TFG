@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('tipo');//puede ser usuario/refugio/(admin)
+            $table->string('tipo')->default('users');;//puede ser usuario/refugio/(admin)
             $table->string('comunidad_autonoma')->nullable();
             $table->rememberToken();
             $table->timestamps();
