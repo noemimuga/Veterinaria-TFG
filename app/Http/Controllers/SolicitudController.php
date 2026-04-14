@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Solicitud;
+use App\Models\Animal;
+use Illuminate\Support\Facades\Auth;
 
 class SolicitudController extends Controller
 {
@@ -11,7 +14,9 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        if (!Auth::user()->esRefugio()) {
+        $user = Auth::user();
+
+        if (!$user || !$user->esRefugio()) {
             abort(403);
         }
 
@@ -33,22 +38,28 @@ class SolicitudController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,Animal $animal)
+   public function store(Request $request, $animalId)
     {
-        $request->validate([
-            'mensaje' => 'required|string|max:500',
-        ]);
 
-        // Crear solicitud
+
+        $animal = Animal::findOrFail($animalId);
+
+        $yaExiste = Solicitud::where('animal_id', $animalId)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($yaExiste) {
+            return redirect()->back()->with('error', 'Ya has solicitado este animal.');
+        }
+
         Solicitud::create([
-            'usuario_id' => Auth::id(),
-            'animal_id' => $animal->id,
-            'mensaje' => $request->mensaje,
+            'animal_id' => $animalId,
+            'user_id' => Auth::id(),
             'estado' => 'pendiente',
         ]);
 
-        return back()->with('success', 'Solicitud enviada correctamente.');
-    }
+        return redirect()->back()->with('success', 'Solicitud enviada correctamente.');
+        }
 
 
 

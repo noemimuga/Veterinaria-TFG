@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Animal;
+use Illuminate\Support\Facades\Auth;
 
 class AnimalController extends Controller
 {
@@ -23,12 +24,13 @@ class AnimalController extends Controller
      */
     public function create()
     {
-        //Se comprueba si el usuario logueado es refugio
+       /* //Se comprueba si el usuario logueado es refugio
         //Si no es un refugio, devuelve un error
         if (!Auth::user()->esRefugio()) {
             abort(403);
         }
-        return view('animales.create');
+        return view('animales.create');*/
+        return view('animales.create'); // esto habra que cambiarlo porqu es para cuando no esta el usuario logeado, si no da problemas
     }
 
 
@@ -84,7 +86,8 @@ class AnimalController extends Controller
      */
     public function show(string $id)
     {
-         return view('animales.show', compact('animal'));
+         $animal = Animal::findOrFail($id);
+    return view('animales.show', compact('animal'));
     }
 
     /**
