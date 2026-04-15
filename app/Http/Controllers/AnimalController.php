@@ -24,13 +24,14 @@ class AnimalController extends Controller
      */
     public function create()
     {
-       /* //Se comprueba si el usuario logueado es refugio
+       //Se comprueba si el usuario logueado es refugio
         //Si no es un refugio, devuelve un error
-        if (!Auth::user()->esRefugio()) {
-            abort(403);
+       if (!Auth::check() || !Auth::user()->esRefugio()) {
+        abort(403);
         }
-        return view('animales.create');*/
-        return view('animales.create'); // esto habra que cambiarlo porqu es para cuando no esta el usuario logeado, si no da problemas
+
+        return view('animales.create');
+
     }
 
 
@@ -43,9 +44,9 @@ class AnimalController extends Controller
     {
        //Se comprueba si el usuario logueado es refugio
         //Si no es un refugio, devuelve un error
-    if (!Auth::user()->esRefugio()) {
-            abort(403);
-        }
+    if (!Auth::check() || !Auth::user()->esRefugio()) {
+        abort(403);
+    }
 
         //Se validan los datos del formulario
            $request->validate([
@@ -54,7 +55,7 @@ class AnimalController extends Controller
             'raza' => 'nullable|string|max:50',
             'edad' => 'integer',
             'descripcion' => 'nullable|string',
-            'foto' => 'nullable|image',
+            'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         //Si hay una foto subida , se guarda en storage/app/public/animales
