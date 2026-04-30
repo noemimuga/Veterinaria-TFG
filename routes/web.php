@@ -30,7 +30,7 @@ Route::resource('animales', AnimalController::class);
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+//Route::middleware('auth')->group(function () {
 
     /*
     |-------------------------
@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/solicitudes/{solicitud}/rechazar', [SolicitudController::class, 'rechazarSolicitud'])
             ->name('solicitudes.rechazar');
     });
-});
+//});
 
 /*
 |--------------------------------------------------------------------------
