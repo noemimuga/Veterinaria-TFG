@@ -5,23 +5,20 @@ use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| RUTAS PÚBLICAS
-|--------------------------------------------------------------------------
-*/
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
 
-/*
-|--------------------------------------------------------------------------
-| ANIMALES (PÚBLICO)
-|--------------------------------------------------------------------------
-*/
+Route::get('/', [AnimalController::class, 'index'])->name('home');
 
-// Resource completo (index, show, create, store, edit, update, destroy)
+
+// Ruta para Adopta (adopta/index.blade.php)
+Route::get('/adopta', [AnimalController::class, 'adopta'])->name('adopta.index');
+
+// Ruta para Contacto (contacto/index.blade.php)
+Route::get('/contacto', function () {
+    return view('contacto.index');
+})->name('contacto.index');
+
+// Rutas para Animales (Index, Create, Show, etc.)
 Route::resource('animales', AnimalController::class);
 
 /*

@@ -1,124 +1,154 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Animales en adopción</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app')
 
-    <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #f4f6f8;
-        }
+@section('title', 'Refugio Nubeko')
 
-        header {
-            background: #2c3e50;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        a {
-            color: white;
-            text-decoration: none;
-            margin-left: 15px;
-        }
-
-        .container {
-            padding: 20px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: #3498db;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .filtros {
-            margin-bottom: 20px;
-        }
-
-        input, select {
-            padding: 8px;
-            margin-right: 10px;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h2>🐾 Animales</h2>
-    <nav>
-        <a href="/">Inicio</a>
-        <a href="/animales">Animales</a>
-    </nav>
-</header>
-
-<div class="container">
-
-    <h1>Animales en adopción</h1>
-
-    <!-- FILTROS -->
-    <form method="GET" class="filtros">
-        <input type="text" name="buscar" placeholder="Buscar...">
-
-        <select name="especie">
-            <option value="">Especie</option>
-            <option value="perro">Perro</option>
-            <option value="gato">Gato</option>
-        </select>
-
-        <input type="number" name="edad" placeholder="Edad">
-
-        <button type="submit">Filtrar</button>
-    </form>
-
-    <!-- LISTADO -->
-    <div class="grid">
-
-        @forelse($animales as $animal)
-            <div class="card">
-                <img src="{{ asset('storage/' . $animal->foto) }}" alt="">
-
-                <h3>{{ $animal->nombre }}</h3>
-                <p>{{ $animal->raza }}</p>
-                <p>Edad: {{ $animal->edad }}</p>
-                <p>Estado: {{ $animal->estado }}</p>
-
-                <a href="/animales/{{ $animal->id }}" class="btn">Ver más</a>
+@section('content')
+<div class="home-container">
+    <!-- SECCIÓN HERO-->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Encuentra a tu compañero de vida</h1>
+            <p>Conectamos animales que buscan un hogar con personas dispuestas a dar amor. Adopta, no compres.</p>
+            
+            <div class="hero-actions">
+                <a href="{{ route('animales.index') }}" class="btn-hero-primary">Quiero adoptar</a>
+                <a href="#" class="btn-hero-secondary">Saber más</a>
             </div>
-        @empty
-            <p>No hay animales disponibles</p>
-        @endforelse
+        </div>
+        <div class="hero-image">
+            <!-- Puedes cambiar esta URL por una foto de tu refugio -->
+            <img src="https://i.pinimg.com/1200x/6a/c6/ee/6ac6ee7c7c21810df64e3dfed7dedfb3.jpg" alt="Perros felices">
+        </div>
+    </section>
 
-    </div>
-
+    <!-- SECCIÓN DE CATEGORÍAS RÁPIDAS -->
+    <section class="quick-categories">
+        <h2>¿A quién buscas?</h2>
+        <div class="categories-grid">
+            <a href="{{ route('animales.index', ['especie' => 'perro']) }}" class="category-card">
+                <span class="icon">🐶</span>
+                <h3>Perros</h3>
+            </a>
+            <a href="{{ route('animales.index', ['especie' => 'gato']) }}" class="category-card">
+                <span class="icon">🐱</span>
+                <h3>Gatos</h3>
+            </a>
+        </div>
+    </section>
 </div>
 
-</body>
-</html>
+<style>
+    /* Estilos específicos para la Home con estilo Kerubi */
+    .home-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4rem;
+        padding: 4rem 0;
+    }
+
+    .hero-content {
+        flex: 1;
+    }
+
+    .hero-content h1 {
+        font-family: 'Cormorant', serif;
+        font-size: 3.5rem;
+        line-height: 1.1;
+        color: var(--beige-800);
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        color: var(--beige-600);
+        margin-bottom: 2rem;
+    }
+
+    .hero-image {
+        flex: 1;
+    }
+
+    .hero-image img {
+        width: 100%;
+        border-radius: 30px;
+        box-shadow: 20px 20px 0px var(--beige-200);
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-hero-primary {
+        background: var(--accent);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s;
+    }
+
+    .btn-hero-secondary {
+        border: 2px solid var(--accent);
+        color: var(--accent);
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s;
+    }
+
+    .btn-hero-primary:hover { background: var(--accent-dark); transform: translateY(-3px); }
+
+    /* Categorías */
+    .quick-categories {
+        text-align: center;
+        padding: 5rem 0;
+    }
+
+    .quick-categories h2 {
+        font-family: 'Cormorant', serif;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(200px, 350px));
+        justify-content: center; 
+        gap: 2rem;
+    }
+
+    .category-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 10px 30px var(--shadow);
+        transition: 0.3s;
+        border: 1px solid var(--beige-100);
+    }
+
+    .category-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent);
+    }
+
+    .category-card .icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+    @media (max-width: 768px) {
+        .hero { flex-direction: column; text-align: center; }
+        .hero-content h1 { font-size: 2.5rem; }
+        .hero-actions { justify-content: center; }
+        .categories-grid { grid-template-columns: 1fr; }
+    }
+</style>
+@endsection
