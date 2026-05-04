@@ -14,13 +14,13 @@ class AnimalController extends Controller
     public function index(Request $request)  // ← AGREGADO $request
     {
         $query = Animal::query();
-        
+
         // Filtro de búsqueda (nombre o raza)
         if ($request->filled('buscar')) {
             $buscar = $request->buscar;
-            $query->where(function($q) use ($buscar) {
+            $query->where(function ($q) use ($buscar) {
                 $q->where('nombre', 'like', "%{$buscar}%")
-                  ->orWhere('raza', 'like', "%{$buscar}%");
+                    ->orWhere('raza', 'like', "%{$buscar}%");
             });
         }  // ← AGREGADA llave de cierre
 
@@ -40,44 +40,52 @@ class AnimalController extends Controller
         $animales = $query->get();
 
         return view('animales.index', compact('animales'));
-    }  
-
-public function adopta(Request $request)
-{
-    $query = Animal::where('estado', 'disponible');
-    
-    // Filtro de búsqueda (nombre o raza)
-    if ($request->filled('buscar')) {
-        $buscar = $request->buscar;
-        $query->where(function($q) use ($buscar) {
-            $q->where('nombre', 'like', "%{$buscar}%")
-              ->orWhere('raza', 'like', "%{$buscar}%");
-        });
     }
 
-    // Filtro de especie
-    if ($request->filled('especie')) {
-        $query->where('especie', $request->especie);
-    }
+    public function adopta(Request $request)
+    {
+        $query = Animal::where('estado', 'disponible');
 
-    // Filtro de raza
-    if ($request->filled('raza')) {
-        $query->where('raza', 'like', "%{$request->raza}%");
-    }
+        // Filtro de búsqueda (nombre o raza)
+        if ($request->filled('buscar')) {
+            $buscar = $request->buscar;
+            $query->where(function ($q) use ($buscar) {
+                $q->where('nombre', 'like', "%{$buscar}%")
+                    ->orWhere('raza', 'like', "%{$buscar}%");
+            });
+        }
 
-    // Filtro de edad
-    if ($request->filled('edad')) {
-        $query->where('edad', $request->edad);
-    }
-    // Filtro por sexo
-    if($request->filled('sexo')){
-        $query->where('sexo', $request->edad);
-    }
+        // Filtro de especie
+        if ($request->filled('especie')) {
+            $query->where('especie', $request->especie);
+        }
 
-    $animales = $query->get();
+        // Filtro de raza
+        if ($request->filled('raza')) {
+            $query->where('raza', 'like', "%{$request->raza}%");
+        }
 
-    return view('adopta.index', compact('animales'));
-}
+        // Filtro de edad
+        if ($request->filled('edad')) {
+            if ($request->edad == 'cachorro') {
+                $query->whereBetween('edad', [0, 1]);
+            } elseif ($request->edad == 'joven') {
+                $query->whereBetween('edad', [1, 3]);
+            } elseif ($request->edad == 'adulto') {
+                $query->whereBetween('edad', [3, 7]);
+            } elseif ($request->edad == 'senior') {
+                $query->where('edad', '>', 7);
+            }
+        }
+        // Filtro por sexo
+        if ($request->filled('sexo')) {
+            $query->where('sexo', $request->sexo);
+        }
+
+        $animales = $query->get();
+
+        return view('adopta.index', compact('animales'));
+    }
 
 
     /**
@@ -86,10 +94,10 @@ public function adopta(Request $request)
      */
     public function create()
     {
-       //Se comprueba si el usuario logueado es refugio
+        //Se comprueba si el usuario logueado es refugio
         //Si no es un refugio, devuelve un error
-       if (!Auth::check() || !Auth::user()->esRefugio()) {
-        abort(403);
+        if (!Auth::check() || !Auth::user()->esRefugio()) {
+            abort(403);
         }
 
         return view('animales.create');
@@ -103,7 +111,7 @@ public function adopta(Request $request)
      */
     public function store(Request $request)
     {
-       //Se comprueba si el usuario logueado es refugio
+        //Se comprueba si el usuario logueado es refugio
         //Si no es un refugio, devuelve un error
         if (!Auth::check() || !Auth::user()->esRefugio()) {
             abort(403);
@@ -126,7 +134,7 @@ public function adopta(Request $request)
         if ($request->hasFile('foto')) {
             $ruta = $request->file('foto')->store('animales', 'public');
         }
-        
+
         Animal::create([
             'nombre' => $request->nombre,
             'especie' => $request->especie,
