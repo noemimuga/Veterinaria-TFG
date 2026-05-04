@@ -6,7 +6,7 @@
 <div class="container">
     <h1 class="text-center">Animales en adopción</h1>
 
-{{-- Formulario de filtros --}}
+    {{-- Formulario de filtros --}}
     <div class="card mb-4">
         <div class="card-body">
             <form action="{{ route('adopta.index') }}" method="GET">
@@ -14,14 +14,13 @@
                     {{-- Búsqueda general --}}
                     <div class="col-md-3">
                         <label for="buscar" class="form-label">Buscar</label>
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="buscar" 
-                            name="buscar" 
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="buscar"
+                            name="buscar"
                             placeholder="Nombre o raza"
-                            value="{{ request('buscar') }}"
-                        >
+                            value="{{ request('buscar') }}">
                     </div>
 
                     {{-- Filtro de especie --}}
@@ -37,14 +36,13 @@
                     {{-- Filtro de raza --}}
                     <div class="col-md-2">
                         <label for="raza" class="form-label">Raza</label>
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="raza" 
-                            name="raza" 
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="raza"
+                            name="raza"
                             placeholder="Raza"
-                            value="{{ request('raza') }}"
-                        >
+                            value="{{ request('raza') }}">
                     </div>
 
                     {{-- Filtro de edad --}}
@@ -59,6 +57,17 @@
                         </select>
                     </div>
 
+                    {{-- Filtrar por sexo --}}
+                    <div class="col-md-2">
+                        <label for="sexo" class="form-label">Sexo</label>
+                        <select class="form-select" id="sexo" name="sexo">
+                            <option value="">Todas</option>
+                            {{-- CORREGIDO: Los value deben ser Hembra/Macho, no perro/gato --}}
+                            <option value="Hembra" {{ request('sexo') == 'Hembra' ? 'selected' : '' }}>Hembra</option>
+                            <option value="Macho" {{ request('sexo') == 'Macho' ? 'selected' : '' }}>Macho</option>
+                        </select>
+                    </div>
+
                     {{-- Botones --}}
                     <div class="col-md-1 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Filtrar</button>
@@ -67,35 +76,35 @@
 
                 {{-- Botón para limpiar filtros --}}
                 @if(request()->anyFilled(['buscar', 'especie', 'raza', 'edad', 'localizacion']))
-                    <div class="row mt-2">
-                        <div class="col-12">
-                            <a href="{{ route('adopta.index') }}" class="btn btn-secondary btn-sm">Limpiar filtros</a>
-                        </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <a href="{{ route('adopta.index') }}" class="btn btn-secondary btn-sm">Limpiar filtros</a>
                     </div>
+                </div>
                 @endif
-       </form>
+            </form>
         </div>
     </div>
 
     <!-- El Grid donde se mostrarán los animales -->
     <div class="grid">
         @forelse($animales as $animal)
-            <div class="card">
-                <!-- Imagen del animal -->
-                <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
+        <div class="card">
+            <!-- Imagen del animal -->
+            <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
 
-                <div class="card-body">
-                    <h3>{{ $animal->nombre }}</h3>
-                    <p><strong>Raza:</strong> {{ $animal->raza }}</p>
-                    <p><strong>Edad:</strong> {{ $animal->edad }} años</p>
-                    
-                    <a href="{{ route('animales.show', $animal->id) }}" class="btn">Conocer a {{ $animal->nombre }}</a>
-                </div>
+            <div class="card-body">
+                <h3>{{ $animal->nombre }}</h3>
+                <p><strong>Raza:</strong> {{ $animal->raza }}</p>
+                <p><strong>Edad:</strong> {{ $animal->edad }} años</p>
+
+                <a href="{{ route('animales.show', $animal->id) }}" class="btn">Conocer a {{ $animal->nombre }}</a>
             </div>
+        </div>
         @empty
-            <div class="no-results">
-                <p>Actualmente no hay animales disponibles para adopción.</p>
-            </div>
+        <div class="no-results">
+            <p>Actualmente no hay animales disponibles para adopción.</p>
+        </div>
         @endforelse
     </div>
 </div>
@@ -116,7 +125,9 @@
         transition: 0.3s;
     }
 
-    .card:hover { transform: translateY(-5px); }
+    .card:hover {
+        transform: translateY(-5px);
+    }
 
     .card img {
         width: 100%;
@@ -124,7 +135,9 @@
         object-fit: cover;
     }
 
-    .card-body { padding: 1.5rem; }
+    .card-body {
+        padding: 1.5rem;
+    }
 
     .btn {
         display: block;
