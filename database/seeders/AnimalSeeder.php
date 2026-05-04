@@ -11,20 +11,23 @@ class AnimalSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
-        //
-        /* Animal::create([
+    public function run()
+{
+    Animal::create([
         'nombre' => 'Luna',
         'especie' => 'Perro',
         'raza' => 'Mestizo',
         'edad' => 2,
-        'sexo' => 'Hembra',
         'descripcion' => 'Muy cariñosa',
         'refugio_id' => 1
-        ]);
-        */
-        // Crear 50 animales aleatorios
-        Animal::factory()->count(50)->create();
-    }
+    ]);
+}
+
+public function index()
+{
+    $animales = Animal::all(); 
+    return view('adopta.index', compact('animales'));
+}
+
+
 }
