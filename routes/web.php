@@ -80,3 +80,9 @@ Route::resource('animales', AnimalController::class);
 |--------------------------------------------------------------------------
 */
 require __DIR__.'/auth.php';
+
+
+Route::view('/faq', 'faq')->name('faq');
+Route::view('/proceso-adopcion', 'proceso')->name('proceso');
+Route::view('/voluntariado', 'voluntariado')->name('voluntariado');
+Route::view('/donaciones', 'donaciones')->name('donaciones');

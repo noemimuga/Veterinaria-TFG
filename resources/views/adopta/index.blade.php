@@ -5,11 +5,32 @@
 @section('content')
 <div class="container">
     <h1 class="text-center">Animales en adopción</h1>
+    <div class="mb-4 text-center">
+
+    <a href="{{ route('adopta.index') }}"
+   class="btn {{ request('especie') ? 'btn-secondary' : 'btn-primary' }}">
+   Todos
+</a>
+
+<a href="{{ route('adopta.index', ['especie' => 'perro']) }}"
+   class="btn {{ request('especie') == 'perro' ? 'btn-primary' : 'btn-secondary' }}">
+   🐶 Perros
+</a>
+
+<a href="{{ route('adopta.index', ['especie' => 'gato']) }}"
+   class="btn {{ request('especie') == 'gato' ? 'btn-primary' : 'btn-secondary' }}">
+   🐱 Gatos
+</a>
+
+</div>
 
     {{-- Formulario de filtros --}}
     <div class="card mb-4">
         <div class="card-body">
             <form action="{{ route('adopta.index') }}" method="GET">
+                @if(request('especie'))
+    <input type="hidden" name="especie" value="{{ request('especie') }}">
+@endif
                 <div class="row g-3">
                     {{-- Búsqueda general --}}
                     <div class="col-md-3">
