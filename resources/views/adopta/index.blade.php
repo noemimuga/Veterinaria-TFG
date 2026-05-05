@@ -7,20 +7,15 @@
     <h1 class="text-center">Animales en adopción</h1>
     <div class="mb-4 text-center">
 
-    <a href="{{ route('adopta.index') }}"
-   class="btn {{ request('especie') ? 'btn-secondary' : 'btn-primary' }}">
-   Todos
-</a>
+    <!--<a href="{{ route('adopta.index') }}" class="btn btn-secondary">Todos</a>
 
-<a href="{{ route('adopta.index', ['especie' => 'perro']) }}"
-   class="btn {{ request('especie') == 'perro' ? 'btn-primary' : 'btn-secondary' }}">
-   🐶 Perros
-</a>
+    <a href="{{ route('adopta.index', ['especie' => 'perro']) }}" class="btn btn-primary">
+        🐶 Perros
+    </a>
 
-<a href="{{ route('adopta.index', ['especie' => 'gato']) }}"
-   class="btn {{ request('especie') == 'gato' ? 'btn-primary' : 'btn-secondary' }}">
-   🐱 Gatos
-</a>
+    <a href="{{ route('adopta.index', ['especie' => 'gato']) }}" class="btn btn-primary">
+        🐱 Gatos
+    </a>-->
 
 </div>
 

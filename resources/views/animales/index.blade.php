@@ -9,7 +9,7 @@
         <div class="hero-content">
             <h1>Encuentra a tu compañero de vida</h1>
             <p>Conectamos animales que buscan un hogar con personas dispuestas a dar amor. Adopta, no compres.</p>
-            
+
             <div class="hero-actions">
                 <a href="{{ route('animales.index') }}" class="btn-hero-primary">Quiero adoptar</a>
                 <a href="#" class="btn-hero-secondary">Saber más</a>
@@ -33,6 +33,8 @@
                 <span class="icon">🐱</span>
                 <h3>Gatos</h3>
             </a>
+
+
         </div>
     </section>
 </div>
@@ -122,7 +124,7 @@
     .categories-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(200px, 350px));
-        justify-content: center; 
+        justify-content: center;
         gap: 2rem;
     }
 
