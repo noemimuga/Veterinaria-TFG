@@ -25,11 +25,11 @@
     <section class="quick-categories">
         <h2>¿A quién buscas?</h2>
         <div class="categories-grid">
-            <a href="{{ route('animales.index', ['especie' => 'perro']) }}" class="category-card">
+            <a href="{{ route('adopta.index', ['especie' => 'perro']) }}" class="category-card">
                 <span class="icon">🐶</span>
                 <h3>Perros</h3>
             </a>
-            <a href="{{ route('animales.index', ['especie' => 'gato']) }}" class="category-card">
+            <a href="{{ route('adopta.index', ['especie' => 'gato']) }}" class="category-card">
                 <span class="icon">🐱</span>
                 <h3>Gatos</h3>
             </a>
