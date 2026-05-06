@@ -507,13 +507,6 @@
                 <p>Brindando segundas oportunidades a nuestros amigos peludos desde 2024</p>
             </div>
             <div class="footer-section">
-                <h4>Enlaces</h4>
-                <a href="{{ route('faq') }}">Preguntas Frecuentes</a>
-                <a href="{{ route('proceso') }}">Proceso de Adopción</a>
-                <a href="{{ route('voluntariado') }}">Voluntariado</a>
-                <a href="{{ route('donaciones') }}">Donaciones</a>
-            </div>
-            <div class="footer-section">
                 <h4>Contacto</h4>
                 <p>📍 Calle del Calvario, Madrid</p>
                 <p>📞 +34 912 345 678</p>

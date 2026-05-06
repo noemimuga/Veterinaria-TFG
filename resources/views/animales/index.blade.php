@@ -11,17 +11,15 @@
             <p>Conectamos animales que buscan un hogar con personas dispuestas a dar amor. Adopta, no compres.</p>
 
             <div class="hero-actions">
-                <a href="{{ route('animales.index') }}" class="btn-hero-primary">Quiero adoptar</a>
-                <a href="#" class="btn-hero-secondary">Saber más</a>
+                <a href="{{ route('adopta.index') }}" class="btn-hero-primary">Quiero adoptar</a>
+                <a href="{{ route('contacto.index') }}" class="btn-hero-secondary">Saber más</a>
             </div>
         </div>
         <div class="hero-image">
-            <!-- Puedes cambiar esta URL por una foto de tu refugio -->
-            <img src="https://i.pinimg.com/1200x/6a/c6/ee/6ac6ee7c7c21810df64e3dfed7dedfb3.jpg" alt="Perros felices">
+            <img src="https://i.pinimg.com/1200x/6a/c6/ee/6ac6ee7c7c21810df64e3dfed7dedfb3.jpg" alt="Perro  y gato">
         </div>
     </section>
 
-    <!-- SECCIÓN DE CATEGORÍAS RÁPIDAS -->
     <section class="quick-categories">
         <h2>¿A quién buscas?</h2>
         <div class="categories-grid">
