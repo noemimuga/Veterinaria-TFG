@@ -7,15 +7,7 @@
     <h1 class="text-center">Animales en adopción</h1>
     <div class="mb-4 text-center">
 
-    <!--<a href="{{ route('adopta.index') }}" class="btn btn-secondary">Todos</a>
 
-    <a href="{{ route('adopta.index', ['especie' => 'perro']) }}" class="btn btn-primary">
-        🐶 Perros
-    </a>
-
-    <a href="{{ route('adopta.index', ['especie' => 'gato']) }}" class="btn btn-primary">
-        🐱 Gatos
-    </a>-->
 
 </div>
 
@@ -23,9 +15,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <form action="{{ route('adopta.index') }}" method="GET">
-                @if(request('especie'))
-    <input type="hidden" name="especie" value="{{ request('especie') }}">
-@endif
+
                 <div class="row g-3">
                     {{-- Búsqueda general --}}
                     <div class="col-md-3">
@@ -91,7 +81,7 @@
                 </div>
 
                 {{-- Botón para limpiar filtros --}}
-                @if(request()->anyFilled(['buscar', 'especie', 'raza', 'edad', 'localizacion']))
+                @if(request()->anyFilled(['buscar', 'especie', 'raza', 'edad', 'sexo']))
                 <div class="row mt-2">
                     <div class="col-12">
                         <a href="{{ route('adopta.index') }}" class="btn btn-secondary btn-sm">Limpiar filtros</a>
