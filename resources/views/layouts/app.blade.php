@@ -317,6 +317,76 @@
             grid-column: 1 / -1;
         }
 
+        /* DARK MODE */
+
+.dark-mode {
+    background: #2b2b2b;
+    color: #f5f5f5;
+}
+
+/* HEADER */
+.dark-mode header {
+    background: #3a3a3a;
+    border-bottom: 1px solid #555;
+}
+
+/* NAV */
+.dark-mode .nav-links a,
+.dark-mode .logo {
+    color: #f5f5f5;
+}
+
+/* TARJETAS */
+.dark-mode .card,
+.dark-mode .card-box,
+.dark-mode .filtros {
+    background: #3a3a3a;
+    color: #f5f5f5;
+    border: 1px solid #555;
+}
+
+/* TEXTOS */
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode p,
+.dark-mode label,
+.dark-mode li {
+    color: #f5f5f5;
+}
+
+/* INPUTS */
+.dark-mode input,
+.dark-mode select {
+    background: #4a4a4a;
+    color: white;
+    border: 1px solid #666;
+}
+
+/* FOOTER */
+.dark-mode footer {
+    background: #1f1f1f;
+}
+
+.dark-mode .footer-section p,
+.dark-mode .footer-section a,
+.dark-mode .footer-bottom {
+    color: #e0e0e0;
+}
+
+/* BOTONES */
+.dark-mode .btn-simple,
+.dark-mode .btn,
+.dark-mode .btn-primary {
+    background: #d4a574;
+    color: white;
+}
+
+/* ENLACES */
+.dark-mode a:hover {
+    color: #f0d9b5;
+}
         /* FOOTER */
         footer {
             background: linear-gradient(135deg, var(--beige-700) 0%, var(--beige-800) 100%);
@@ -476,6 +546,11 @@
         <li><a href="{{ route('home') }}">Inicio</a></li>
         <li><a href="{{ route('adopta.index') }}">Adoptar</a></li>
         <li><a href="{{ route('contacto.index') }}">Contacto</a></li>
+        <li>
+    <button class="btn-simple" onclick="toggleDarkMode()">
+        🌙
+    </button>
+</li>
         @auth
             @if(Auth::user()->esRefugio())
                 <li><a href="{{ route('animales.create') }}" class="btn-primary">Publicar Animal</a></li>
@@ -510,6 +585,9 @@
                 <a href="{{ route('proceso') }}">Proceso de Adopción</a>
                 <a href="{{ route('voluntariado') }}">Voluntariado</a>
                 <a href="{{ route('donaciones') }}">Donaciones</a>
+                <a href="{{ route('privacidad') }}">Política de Privacidad</a>
+                <a href="{{ route('legal') }}">Aviso Legal</a>
+
             </div>
             <div class="footer-section">
                 <h4>Contacto</h4>
@@ -638,6 +716,11 @@
             cargarChat();
         }
     });
+    function toggleDarkMode() {
+
+    document.body.classList.toggle("dark-mode");
+
+    }
 </script>
 
 

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container-contacto">
-    
+
     <!-- SECCIÓN: QUIÉNES SOMOS -->
     <section class="nosotros-section">
         <div class="nosotros-grid">
@@ -16,7 +16,7 @@
                 <h2>Sobre Refugio Nubeko</h2>
                 <p>Somos una organización dedicada al rescate y rehabilitación de animales en situación de abandono. Creemos firmemente que cada mascota merece una segunda oportunidad en un hogar lleno de amor.</p>
                 <p>Desde nuestra fundación, hemos ayudado a cientos de peludos a encontrar su familia ideal, trabajando con transparencia y pasión por el bienestar animal.</p>
-                
+
                 <div class="stats">
                     <div class="stat-item">
                         <strong>500+</strong>
@@ -39,7 +39,7 @@
             <div class="contacto-info">
                 <h2>Ponte en contacto</h2>
                 <p>¿Tienes dudas sobre el proceso de adopción o quieres colaborar con nosotros? Estamos aquí para ayudarte.</p>
-                
+
                 <div class="info-list">
                     <div class="info-item">
                         <span class="icon">📍</span>
@@ -75,6 +75,32 @@
                 </form>
             </div>
         </div>
+        <!-- MAPA + UBICACIÓN -->
+<div style="margin-top: 2rem;">
+
+    <h3 style="margin-bottom: 1rem;">Cómo llegar</h3>
+
+    {{-- Imagen del mapa (sin APIs, sin dependencias) --}}
+     <iframe
+        src="https://www.google.com/maps?q=C.+del+Calvario+Madrid&output=embed"
+        width="100%"
+        height="300"
+        style="border:0; border-radius:15px;"
+        allowfullscreen=""
+        loading="lazy">
+    </iframe>
+
+    <p style="margin-top: 1rem;">
+        <strong>Dirección:</strong> Calle del Calvario, Madrid, España
+    </p>
+
+    <p>
+        <a href="https://www.google.com/maps?q=C.+del+Calvario+Madrid" target="_blank">
+            Ver en Google Maps
+        </a>
+    </p>
+
+</div>
     </section>
 </div>
 

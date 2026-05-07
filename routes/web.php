@@ -86,3 +86,7 @@ Route::view('/faq', 'faq')->name('faq');
 Route::view('/proceso-adopcion', 'proceso')->name('proceso');
 Route::view('/voluntariado', 'voluntariado')->name('voluntariado');
 Route::view('/donaciones', 'donaciones')->name('donaciones');
+
+Route::view('/politica-privacidad', 'privacidad')->name('privacidad');
+Route::view('/aviso-legal', 'legal')->name('legal');
+
