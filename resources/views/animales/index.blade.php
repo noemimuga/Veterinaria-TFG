@@ -32,13 +32,11 @@
                 <h3>Gatos</h3>
             </a>
 
-
         </div>
     </section>
 </div>
 
 <style>
-    /* Estilos específicos para la Home con estilo Kerubi */
     .home-container {
         max-width: 1200px;
         margin: 0 auto;

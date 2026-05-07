@@ -12,7 +12,7 @@
 
     <div class="center">
         <button class="btn-simple" onclick="mostrarMensaje()">¿Listo para adoptar?</button>
-        <p id="mensaje" class="hidden">¡Genial! Ve a la sección Adoptar 🐾</p>
+        <p id="mensaje" class="hidden">¡Genial! Ve a la sección Adoptar</p>
     </div>
 </div>
 
