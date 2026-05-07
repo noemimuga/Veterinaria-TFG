@@ -13,9 +13,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <form action="{{ route('adopta.index') }}" method="GET">
-                @if(request('especie'))
-    <input type="hidden" name="especie" value="{{ request('especie') }}">
-@endif
+
                 <div class="row g-3">
                     {{-- Búsqueda general --}}
                     <div class="col-md-3">
