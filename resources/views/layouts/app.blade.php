@@ -470,7 +470,6 @@
 <body>
     <header>
         <nav>
-    <!-- Logo: Ahora apunta a la home (el inicio real) -->
     <a href="{{ route('home') }}" class="logo">Refugio Nubeko</a>
 
     <ul class="nav-links">
