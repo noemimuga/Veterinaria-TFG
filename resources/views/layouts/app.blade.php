@@ -523,6 +523,126 @@
         </div>
     </footer>
 
+    <!-- 🍪 BANNER COOKIES -->
+<!-- 🍪 BANNER COOKIES -->
+<div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #4a3d30;
+    color: white; padding: 20px; text-align: center; z-index: 9999; display: none;">
+
+    Usamos cookies para mejorar la experiencia y habilitar funciones como el chat.
+
+    <br><br>
+
+    <button onclick="aceptarCookies()">Aceptar</button>
+    <button onclick="rechazarCookies()">Rechazar</button>
+    <button onclick="mostrarPanel()">Configurar</button>
+</div>
+
+<!-- ⚙️ PANEL CONFIGURACIÓN -->
+<div id="cookie-panel" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white;
+    padding: 20px; z-index: 10000; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+
+    <h3>Preferencias de cookies</h3>
+
+    <label>
+        <input type="checkbox" id="chatCookies"> Activar chat
+    </label>
+
+    <br><br>
+
+    <button onclick="guardarPreferencias()">Guardar</button>
+    <button onclick="cerrarTodo()">Cancelar</button>
+</div>
     @yield('extra-scripts')
+
+<script>
+    const EXPIRACION_DIAS = 7;
+    let chatCargado = false;
+
+    /* 💬 CARGAR CHAT */
+    function cargarChat() {
+        if (chatCargado) return;
+        chatCargado = true;
+
+        const s1 = document.createElement("script");
+        s1.src = "https://embed.tawk.to/69fb71d5ca8b551c36f24a66/1jnv39b4k";
+        s1.async = true;
+        document.body.appendChild(s1);
+    }
+
+    /* 🍪 MOSTRAR / OCULTAR */
+    function mostrarBanner() {
+        document.getElementById("cookie-banner").style.display = "block";
+    }
+
+    function cerrarTodo() {
+        document.getElementById("cookie-banner").style.display = "none";
+        document.getElementById("cookie-panel").style.display = "none";
+    }
+
+    function mostrarPanel() {
+        document.getElementById("cookie-panel").style.display = "block";
+    }
+
+    /* ✅ ACEPTAR */
+    function aceptarCookies() {
+        localStorage.setItem("cookiesAceptadas", "true");
+        localStorage.setItem("chatCookies", "true");
+        localStorage.setItem("cookieDate", Date.now());
+
+        cerrarTodo();
+        cargarChat();
+    }
+
+    /* ❌ RECHAZAR */
+    function rechazarCookies() {
+        localStorage.setItem("cookiesAceptadas", "false");
+        localStorage.setItem("chatCookies", "false");
+        localStorage.setItem("cookieDate", Date.now());
+
+        cerrarTodo();
+    }
+
+    /* 💾 GUARDAR CONFIG */
+    function guardarPreferencias() {
+        const chat = document.getElementById("chatCookies").checked;
+
+        localStorage.setItem("cookiesAceptadas", "true");
+        localStorage.setItem("chatCookies", chat ? "true" : "false");
+        localStorage.setItem("cookieDate", Date.now());
+
+        cerrarTodo();
+
+        if (chat) cargarChat();
+    }
+
+    /* 🚀 INICIALIZACIÓN PROFESIONAL */
+    document.addEventListener("DOMContentLoaded", function () {
+        const decision = localStorage.getItem("cookiesAceptadas");
+        const chat = localStorage.getItem("chatCookies");
+        const last = localStorage.getItem("cookieDate");
+
+        const ahora = Date.now();
+        const expira = EXPIRACION_DIAS * 24 * 60 * 60 * 1000;
+
+        const necesitaBanner =
+            !last || (ahora - last > expira);
+
+        if (necesitaBanner) {
+            mostrarBanner();
+            return;
+        }
+
+        cerrarTodo();
+
+        if (chat === "true") {
+            cargarChat();
+        }
+    });
+</script>
+
+
+
+
+
 </body>
 </html>
