@@ -470,11 +470,9 @@
 <body>
     <header>
         <nav>
-    <!-- Logo: Ahora apunta a la home (el inicio real) -->
     <a href="{{ route('home') }}" class="logo">Refugio Nubeko</a>
 
     <ul class="nav-links">
-        <!-- Inicio: Apunta a la página principal con estilo Kerubi -->
         <li><a href="{{ route('home') }}">Inicio</a></li>
         <li><a href="{{ route('adopta.index') }}">Adoptar</a></li>
         <li><a href="{{ route('contacto.index') }}">Contacto</a></li>
@@ -504,7 +502,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Refugio Nubeko</h4>
-                <p>Brindando segundas oportunidades a nuestros amigos peludos desde 2024</p>
+                <p>Brindando segundas oportunidades a nuestros amigos peludos desde 2026</p>
             </div>
             <div class="footer-section">
                 <h4>Enlaces</h4>
@@ -516,12 +514,12 @@
             <div class="footer-section">
                 <h4>Contacto</h4>
                 <p>📍 Calle del Calvario, Madrid</p>
-                <p>📞 +34 912 345 678</p>
+                <p>📞 +34 123 456 789</p>
                 <p>✉️ info@refugionubeko.com</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Refugio Nubeko. Todos los derechos reservados.</p>
+            <p>&copy; 2026 Refugio Nubeko. Todos los derechos reservados.</p>
         </div>
     </footer>
 

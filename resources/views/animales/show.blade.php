@@ -47,11 +47,11 @@
             <div class="acciones-detalle">
                 @if($animal->estado == 'disponible')
                     <a href="{{ route('solicitudes.index', $animal->id) }}" class="btn-principal-nubeko">
-                        ❤️ Solicitar Adopción
+                        Solicitar Adopción
                     </a>
                 @else
                     <div class="msg-adoptado">
-                        ✨ Este pequeño ya encontró un hogar
+                        Este pequeño ya encontró un hogar
                     </div>
                 @endif
                 

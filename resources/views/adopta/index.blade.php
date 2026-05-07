@@ -7,8 +7,6 @@
     <h1 class="text-center">Animales en adopción</h1>
     <div class="mb-4 text-center">
 
-
-
 </div>
 
     {{-- Formulario de filtros --}}
@@ -67,8 +65,7 @@
                     <div class="col-md-2">
                         <label for="sexo" class="form-label">Sexo</label>
                         <select class="form-select" id="sexo" name="sexo">
-                            <option value="">Todas</option>
-                            {{-- CORREGIDO: Los value deben ser Hembra/Macho, no perro/gato --}}
+                            <option value="">Todas</option>               
                             <option value="Hembra" {{ request('sexo') == 'Hembra' ? 'selected' : '' }}>Hembra</option>
                             <option value="Macho" {{ request('sexo') == 'Macho' ? 'selected' : '' }}>Macho</option>
                         </select>
@@ -92,7 +89,6 @@
         </div>
     </div>
 
-    <!-- El Grid donde se mostrarán los animales -->
     <div class="grid">
         @forelse($animales as $animal)
         <div class="card">
