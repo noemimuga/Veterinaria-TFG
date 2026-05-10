@@ -90,3 +90,16 @@ Route::view('/donaciones', 'donaciones')->name('donaciones');
 Route::view('/politica-privacidad', 'privacidad')->name('privacidad');
 Route::view('/aviso-legal', 'legal')->name('legal');
 
+
+/*
+|--------------------------------------------------------------------------
+| IDIOMAS
+|--------------------------------------------------------------------------
+*/
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['es', 'en'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+});
+

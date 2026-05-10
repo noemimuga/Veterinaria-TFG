@@ -1,54 +1,92 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="nombre" :value="__('Nombre')" />
-            <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')"
-                required autofocus />
-            <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
-        </div>
+<div class="container-dinamico">
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <h1 class="titulo">{{ __('messages.register_title') }}</h1>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <div class="card-box">
 
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="new-password" />
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <!-- Nombre -->
+            <div>
+                <label>{{ __('messages.name') }}</label>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                <input
+                    type="text"
+                    name="nombre"
+                    value="{{ old('nombre') }}"
+                    required
+                    autofocus
+                    style="width:100%; padding:10px; margin-top:10px; margin-bottom:10px;"
+                >
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                name="password_confirmation" required autocomplete="new-password" />
+                <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+            </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+            <!-- Email -->
+            <div class="mt-4">
+                <label>{{ __('messages.email') }}</label>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                    style="width:100%; padding:10px; margin-top:10px; margin-bottom:10px;"
+                >
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            </div>
+
+            <!-- Password -->
+            <div class="mt-4">
+                <label>{{ __('messages.password') }}</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    required
+                    style="width:100%; padding:10px; margin-top:10px; margin-bottom:10px;"
+                >
+
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
+
+            <!-- Confirm -->
+            <div class="mt-4">
+                <label>{{ __('messages.confirm_password') }}</label>
+
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    required
+                    style="width:100%; padding:10px; margin-top:10px; margin-bottom:10px;"
+                >
+
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            </div>
+
+            <!-- Botones -->
+            <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+
+                <a href="{{ route('login') }}">
+                    {{ __('messages.already_account') }}
+                </a>
+
+                <button type="submit" class="btn-simple">
+                    {{ __('messages.register') }}
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 @endsection

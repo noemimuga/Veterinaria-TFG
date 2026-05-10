@@ -539,6 +539,7 @@
 </head>
 <body>
     <header>
+
         <nav>
     <a href="{{ route('home') }}" class="logo">Refugio Nubeko</a>
 
@@ -546,19 +547,27 @@
         <li><a href="{{ route('home') }}">Inicio</a></li>
         <li><a href="{{ route('adopta.index') }}">Adoptar</a></li>
         <li><a href="{{ route('contacto.index') }}">Contacto</a></li>
-        <li>
-    <button class="btn-simple" onclick="toggleDarkMode()">
-        🌙
-    </button>
-</li>
-        @auth
-            @if(Auth::user()->esRefugio())
-                <li><a href="{{ route('animales.create') }}" class="btn-primary">Publicar Animal</a></li>
-            @endif
-            <li><a href="{{ url('/profile') }}">Mi Cuenta</a></li>
-        @else
-            <li><a href="{{ route('login') }}" class="btn-primary">Iniciar Sesión</a></li>
-        @endauth
+
+            @auth
+                @if(Auth::user()->esRefugio())
+                    <li><a href="{{ route('animales.create') }}" class="btn-primary">Publicar Animal</a></li>
+                @endif
+                <li><a href="{{ url('/profile') }}">Mi Cuenta</a></li>
+                   <li><form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <button type="submit" class="btn-primary" style="border:none; cursor:pointer;">Cerrar sesión</button>
+                        </form>
+                    </li>
+                @else
+                <li><a href="{{ route('login') }}" class="btn-primary">Iniciar Sesión</a></li>
+
+                <li><a href="{{ route('register') }}" class="btn-primary">Registrarse</a></li>
+            @endauth
+
+        <button class="btn-simple" onclick="toggleDarkMode()">🌙</button>
+        <a href="/lang/es"> <img src="{{ asset('img/flags/espana.png') }}" width="24"></a>
+        <a href="/lang/en"><img src="{{ asset('img/flags/ing.png') }}" width="24"></a>
     </ul>
 </nav>
     </header>

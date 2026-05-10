@@ -1,29 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+
+<div class="container-dinamico">
+
+    <h1 class="titulo">Confirmar contraseña</h1>
+
+    <div class="card-box">
+
+        <p style="margin-bottom:20px;">
+            Esta es una zona segura de la aplicación. Confirma tu contraseña antes de continuar.
+        </p>
+
+        <form method="POST" action="{{ route('password.confirm') }}">
+            @csrf
+
+            <!-- Password -->
+            <div>
+                <label>Contraseña</label>
+
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                    autocomplete="current-password"
+                    style="width:100%; padding:10px; margin-top:10px; margin-bottom:10px;"
+                >
+
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
+
+            <!-- Botón -->
+            <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+                <button type="submit" class="btn-simple">
+                    Confirmar
+                </button>
+            </div>
+
+        </form>
+
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
-        @csrf
+</div>
 
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
 @endsection

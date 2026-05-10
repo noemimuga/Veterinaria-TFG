@@ -1,27 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('¿Has olvidado tu contraseña? No pasa nada. Introduce tu correo electrónico y te enviaremos un enlace para restablecerla.') }}
+
+<div class="container-dinamico">
+
+    <h1 class="titulo">{{ __('messages.forgot_password') }}</h1>
+
+    <div class="card-box">
+
+        <p style="margin-bottom:20px;">
+            {{ __('messages.forgot_password_text') }}
+        </p>
+
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+
+            <div>
+
+                <label>{{ __('messages.email') }}</label>
+
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    required
+                    autofocus
+                    style="width:100%; padding:10px; margin-top:10px; margin-bottom:10px;"
+                >
+
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
+            </div>
+
+            <div style="display:flex; justify-content:end; margin-top:20px;">
+
+                <button type="submit" class="btn-simple">
+                    {{ __('messages.send_reset_link') }}
+                </button>
+
+            </div>
+
+        </form>
+
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+</div>
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Correo electrónico: ')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Enviar enlace de recuperación') }}
-            </x-primary-button>
-        </div>
-    </form>
 @endsection
