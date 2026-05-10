@@ -64,13 +64,22 @@
                             Este pequeño ya encontró un hogar
                         </div>
                     @endif
+
+                    {{-- ❤️ FAVORITOS --}}
+                    @if($animal)
+                        <form action="{{ route('favoritos.store', $animal->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn-favorito">
+                                ❤️ Añadir a favoritos
+                            </button>
+                        </form>
+@endif
+
                 @else
                     <a href="{{ route('login') }}" class="btn-principal-nubeko">Inicia sesión</a>
                 @endauth
 
-                <a href="{{ route('adopta.index') }}" class="btn-secundario-nubeko">
-                    ← Volver a la lista
-                </a>
+                <a href="{{ route('adopta.index') }}" class="btn-secundario-nubeko">← Volver a la lista</a>
             </div>
         </div>
     </div>
@@ -243,6 +252,23 @@
         text-align: center;
         font-weight: 600;
     }
+
+    .btn-favorito {
+    margin-top: 10px;
+    background: transparent;
+    border: 2px solid #d4a574;
+    color: #8b7355;
+    padding: 0.8rem;
+    border-radius: 50px;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-favorito:hover {
+    background: #d4a574;
+    color: white;
+}
 
     @media (max-width: 768px) {
         .card-detalle { grid-template-columns: 1fr; }
