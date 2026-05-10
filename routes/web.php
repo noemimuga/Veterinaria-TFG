@@ -27,60 +27,39 @@ Route::resource('animales', AnimalController::class);
 |--------------------------------------------------------------------------
 */
 
-//Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
 
-    /*
-    |-------------------------
-    | PERFIL (Laravel Breeze)
-    |-------------------------
-    */
+    // PERFIL
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    /*
-    |-------------------------
-    | DASHBOARD
-    |-------------------------
-    */
+    // DASHBOARD
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    /*
-    |-------------------------
-    | SOLICITUDES (USUARIOS)
-    |-------------------------
-    */
+    // SOLICITAR ADOPCIÓN (IMPORTANTE: aquí protegido)
     Route::post('/animales/{animal}/solicitar', [SolicitudController::class, 'store'])
         ->name('solicitudes.store');
 
-    /*
-    |-------------------------
-    | SOLO REFUGIOS
-    |-------------------------
-    */
-    Route::middleware('refugio')->group(function () {
+     // SOLICITUDES (REFUGIO / LOGUEADOS POR AHORA)
+    Route::get('/solicitudes', [SolicitudController::class, 'index'])
+        ->name('solicitudes.index');
 
-        // GESTIÓN DE SOLICITUDES
-        Route::get('/solicitudes', [SolicitudController::class, 'index'])
-            ->name('solicitudes.index');
+    Route::patch('/solicitudes/{solicitud}/aceptar', [SolicitudController::class, 'aceptarSolicitud'])
+        ->name('solicitudes.aceptar');
 
-        Route::patch('/solicitudes/{solicitud}/aceptar', [SolicitudController::class, 'aceptarSolicitud'])
-            ->name('solicitudes.aceptar');
+    Route::patch('/solicitudes/{solicitud}/rechazar', [SolicitudController::class, 'rechazarSolicitud'])
+        ->name('solicitudes.rechazar');
 
-        Route::patch('/solicitudes/{solicitud}/rechazar', [SolicitudController::class, 'rechazarSolicitud'])
-            ->name('solicitudes.rechazar');
-    });
-//});
+});
 
-/*
-|--------------------------------------------------------------------------
-| AUTH (Breeze)
-|--------------------------------------------------------------------------
-*/
+
+
+
+
 require __DIR__.'/auth.php';
-
 
 Route::view('/faq', 'faq')->name('faq');
 Route::view('/proceso-adopcion', 'proceso')->name('proceso');
@@ -90,12 +69,6 @@ Route::view('/donaciones', 'donaciones')->name('donaciones');
 Route::view('/politica-privacidad', 'privacidad')->name('privacidad');
 Route::view('/aviso-legal', 'legal')->name('legal');
 
-
-/*
-|--------------------------------------------------------------------------
-| IDIOMAS
-|--------------------------------------------------------------------------
-*/
 Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['es', 'en'])) {
         session(['locale' => $locale]);
