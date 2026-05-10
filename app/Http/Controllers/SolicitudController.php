@@ -30,13 +30,8 @@ class SolicitudController extends Controller
         return view('solicitudes.index', compact('solicitudes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(User $user): bool
-{
-    return $user->tipo === 'users';
-}
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -44,12 +39,12 @@ class SolicitudController extends Controller
    public function store(Request $request, $animalId)
     {
 
-        $this->authorize('create', Solicitud::class);
+       // $this->authorize('create', Solicitud::class);
 
         $animal = Animal::findOrFail($animalId);
 
         $yaExiste = Solicitud::where('animal_id', $animalId)
-            ->where('user_id', Auth::id())
+            ->where('usuario_id', Auth::id())
             ->first();
 
         if ($yaExiste) {
@@ -62,8 +57,9 @@ class SolicitudController extends Controller
 
         Solicitud::create([
             'animal_id' => $animalId,
-            'user_id' => Auth::id(),
+            'usuario_id' => Auth::id(),
             'estado' => 'pendiente',
+            'mensaje' => $request->mensaje,
         ]);
 
         return redirect()->back()->with('success', 'Solicitud enviada correctamente.');
@@ -75,7 +71,7 @@ class SolicitudController extends Controller
 
 public function aceptarSolicitud(Solicitud $solicitud)
 {
-    $this->authorize('update', $solicitud);
+    //$this->authorize('update', $solicitud);
 
     $animal = $solicitud->animal;
 
@@ -107,7 +103,7 @@ public function aceptarSolicitud(Solicitud $solicitud)
 
 public function rechazarSolicitud(Solicitud $solicitud)
 {
-    $this->authorize('update', $solicitud);
+    //$this->authorize('update', $solicitud);
 
     $solicitud->estado = 'rechazada';
     $solicitud->save();
@@ -162,7 +158,7 @@ public function show(Solicitud $solicitud)
     {
         $user = Auth::user();
 
-        if ($solicitud->user_id !== $user->id) {
+        if ($solicitud->usuario_id !== $user->id) {
             abort(403);
         }
 

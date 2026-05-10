@@ -13,9 +13,9 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * The policy mappings for the application.
      */
-    protected $policies = [
+    /*protected $policies = [
         Solicitud::class => SolicitudPolicy::class,
-    ];
+    ];*/
 
     /**
      * Register any authentication / authorization services.

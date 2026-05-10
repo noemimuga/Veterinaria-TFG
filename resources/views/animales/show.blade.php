@@ -56,6 +56,7 @@
                     @if($animal->estado == 'disponible')
                         <form action="{{ route('solicitudes.store', $animal->id) }}" method="POST">
                             @csrf
+                            <textarea name="mensaje" placeholder="Escribe por qué quieres adoptar..." class="form-control"></textarea>
                             <button type="submit" class="btn-principal-nubeko">Solicitar Adopción</button>
                         </form>
                     @else
@@ -64,7 +65,7 @@
                         </div>
                     @endif
                 @else
-                    <a href="{{ route('login') }}" class="btn-principal-nubeko">Inicia sesión para adoptar</a>
+                    <a href="{{ route('login') }}" class="btn-principal-nubeko">Inicia sesión</a>
                 @endauth
 
                 <a href="{{ route('adopta.index') }}" class="btn-secundario-nubeko">

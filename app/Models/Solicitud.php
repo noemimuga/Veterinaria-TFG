@@ -47,4 +47,10 @@ class Solicitud extends Model
         return $this->estado === 'rechazada';
     }
 
+public function user()
+{
+    return $this->belongsTo(User::class, 'usuario_id');
 }
+
+}
+
