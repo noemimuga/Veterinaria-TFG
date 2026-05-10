@@ -5,28 +5,44 @@ use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| RUTAS PÚBLICAS
+|--------------------------------------------------------------------------
+*/
 
-
+// Home
 Route::get('/', [AnimalController::class, 'index'])->name('home');
 
-
-// Ruta para Adopta (adopta/index.blade.php)
+// Adoptar
 Route::get('/adopta', [AnimalController::class, 'adopta'])->name('adopta.index');
 
-// Ruta para Contacto (contacto/index.blade.php)
+// Contacto
 Route::get('/contacto', function () {
     return view('contacto.index');
 })->name('contacto.index');
 
-// Rutas para Animales (Index, Create, Show, etc.)
-Route::resource('animales', AnimalController::class);
+// Info estática
+Route::view('/faq', 'faq')->name('faq');
+Route::view('/proceso-adopcion', 'proceso')->name('proceso');
+Route::view('/voluntariado', 'voluntariado')->name('voluntariado');
+Route::view('/donaciones', 'donaciones')->name('donaciones');
+Route::view('/politica-privacidad', 'privacidad')->name('privacidad');
+Route::view('/aviso-legal', 'legal')->name('legal');
+
+// Cambio de idioma
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['es', 'en'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+});
 
 /*
 |--------------------------------------------------------------------------
 | RUTAS PROTEGIDAS (LOGIN)
 |--------------------------------------------------------------------------
 */
-
 Route::middleware('auth')->group(function () {
 
     // PERFIL
@@ -39,40 +55,42 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // SOLICITAR ADOPCIÓN (IMPORTANTE: aquí protegido)
-    Route::post('/animales/{animal}/solicitar', [SolicitudController::class, 'store'])
-        ->name('solicitudes.store');
+    /*
+    |--------------------------------------------------------------------------
+    | RUTAS PARA USUARIOS
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('can:usuario')->group(function () {
+        // Solicitar adopción
+        Route::post('/animales/{animal}/solicitar', [SolicitudController::class, 'store'])
+            ->name('solicitudes.store');
+    });
 
-     // SOLICITUDES (REFUGIO / LOGUEADOS POR AHORA)
-    Route::get('/solicitudes', [SolicitudController::class, 'index'])
-        ->name('solicitudes.index');
+    /*
+    |--------------------------------------------------------------------------
+    | RUTAS PARA REFUGIOS
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware('can:refugio')->group(function () {
+        // Ver todas las solicitudes
+        Route::get('/solicitudes', [SolicitudController::class, 'index'])
+            ->name('solicitudes.index');
 
-    Route::patch('/solicitudes/{solicitud}/aceptar', [SolicitudController::class, 'aceptarSolicitud'])
-        ->name('solicitudes.aceptar');
+        // Aceptar / Rechazar solicitudes
+        Route::patch('/solicitudes/{solicitud}/aceptar', [SolicitudController::class, 'aceptarSolicitud'])
+            ->name('solicitudes.aceptar');
 
-    Route::patch('/solicitudes/{solicitud}/rechazar', [SolicitudController::class, 'rechazarSolicitud'])
-        ->name('solicitudes.rechazar');
+        Route::patch('/solicitudes/{solicitud}/rechazar', [SolicitudController::class, 'rechazarSolicitud'])
+            ->name('solicitudes.rechazar');
+
+        // Publicar animales (ya que refugio puede crear)
+        Route::resource('animales', AnimalController::class)->except(['index', 'show']);
+    });
 
 });
 
-
-
-
-
+// Rutas de autenticación (login, register, etc.)
 require __DIR__.'/auth.php';
 
-Route::view('/faq', 'faq')->name('faq');
-Route::view('/proceso-adopcion', 'proceso')->name('proceso');
-Route::view('/voluntariado', 'voluntariado')->name('voluntariado');
-Route::view('/donaciones', 'donaciones')->name('donaciones');
-
-Route::view('/politica-privacidad', 'privacidad')->name('privacidad');
-Route::view('/aviso-legal', 'legal')->name('legal');
-
-Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['es', 'en'])) {
-        session(['locale' => $locale]);
-    }
-    return redirect()->back();
-});
-
+// Mostrar animales públicos
+Route::resource('animales', AnimalController::class)->only(['index', 'show']);

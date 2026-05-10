@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Solicitud;
 use App\Models\Animal;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\SolicitudAceptada;
+use App\Mail\SolicitudRechazada;
+use Illuminate\Support\Facades\Mail;
 
 class SolicitudController extends Controller
 {
@@ -30,10 +33,10 @@ class SolicitudController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    public function create(User $user): bool
+{
+    return $user->tipo === 'users';
+}
 
     /**
      * Store a newly created resource in storage.
@@ -41,6 +44,7 @@ class SolicitudController extends Controller
    public function store(Request $request, $animalId)
     {
 
+        $this->authorize('create', Solicitud::class);
 
         $animal = Animal::findOrFail($animalId);
 
@@ -50,6 +54,10 @@ class SolicitudController extends Controller
 
         if ($yaExiste) {
             return redirect()->back()->with('error', 'Ya has solicitado este animal.');
+        }
+
+        if($animal->estado !== 'disponible') {
+            return redirect()->back()->with('error', 'Este animal ya no está disponible.');
         }
 
         Solicitud::create([
@@ -63,50 +71,73 @@ class SolicitudController extends Controller
 
 
 
-public function aceptarSolicitud(Solicitud $solicitud){
-$animal = $solicitud->animal;
 
-        if ($animal->refugio_id !== Auth::id()) {
-            abort(403);
-        }
 
-        $solicitud->estado = 'aceptada';
-        $solicitud->save();
+public function aceptarSolicitud(Solicitud $solicitud)
+{
+    $this->authorize('update', $solicitud);
 
-        // Cambiar estado del animal a adoptado
-        $animal->estado = 'adoptado';
-        $animal->save();
+    $animal = $solicitud->animal;
 
-        // Rechazar automáticamente las demás solicitudes
-        Solicitud::where('animal_id', $animal->id)
-            ->where('id', '!=', $solicitud->id)
-            ->update(['estado' => 'rechazada']);
+    $solicitud->estado = 'aceptada';
+    $solicitud->save();
 
-        return back()->with('success', 'Solicitud aceptada, animal adoptado.');
+    $animal->estado = 'adoptado';
+    $animal->save();
+
+    // Rechazar automáticamente las demás solicitudes
+    Solicitud::where('animal_id', $animal->id)
+        ->where('id', '!=', $solicitud->id)
+        ->update(['estado' => 'rechazada']);
+
+    // ✅ Notificación al usuario que fue aceptado
+    Mail::to($solicitud->user->email)->send(new SolicitudAceptada($solicitud));
+
+    // ✅ Notificación a los usuarios rechazados
+    $rechazadas = Solicitud::where('animal_id', $animal->id)
+        ->where('id', '!=', $solicitud->id)
+        ->get();
+
+    foreach ($rechazadas as $s) {
+        Mail::to($s->user->email)->send(new SolicitudRechazada($s));
+    }
+
+    return back()->with('success', 'Solicitud aceptada, animal adoptado.');
+}
+
+public function rechazarSolicitud(Solicitud $solicitud)
+{
+    $this->authorize('update', $solicitud);
+
+    $solicitud->estado = 'rechazada';
+    $solicitud->save();
+
+    // ✅ Notificación al usuario que fue rechazado
+    Mail::to($solicitud->user->email)->send(new SolicitudRechazada($solicitud));
+
+    return back()->with('success', 'Solicitud rechazada.');
 }
 
 
-public function rechazarSolicitud(Solicitud $solicitud){
-$animal = $solicitud->animal;
-
-        if ($animal->refugio_id !== Auth::id()) {
-            abort(403);
-        }
-
-        $solicitud->estado = 'rechazada';
-        $solicitud->save();
-
-        return back()->with('success', 'Solicitud rechazada.');
-
-}
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+public function show(Solicitud $solicitud)
+{
+    $user = Auth::user();
+
+    // Validación de acceso: solo el refugio propietario o el admin pueden ver
+    if (!$user->esRefugio() && !$user->esAdmin()) {
+        abort(403);
     }
+
+    if ($user->esRefugio() && $solicitud->animal->refugio_id !== $user->id) {
+        abort(403);
+    }
+
+    return view('solicitudes.show', compact('solicitud'));
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -127,9 +158,21 @@ $animal = $solicitud->animal;
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Solicitud $solicitud)
     {
-        //
+        $user = Auth::user();
+
+        if ($solicitud->user_id !== $user->id) {
+            abort(403);
+        }
+
+        if ($solicitud->estado !== 'pendiente') {
+            return back()->with('error', 'No puedes cancelar una solicitud ya procesada.');
+        }
+
+        $solicitud->delete();
+
+        return back()->with('success', 'Solicitud cancelada correctamente.');
     }
 
 }

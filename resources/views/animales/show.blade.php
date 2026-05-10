@@ -1,8 +1,15 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 
 @section('title', $animal->nombre . ' - Detalle de Adopción')
 
 @section('content')
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
 <div class="container-detalle">
     <div class="card-detalle">
         {{-- Sección de Imagen --}}
@@ -13,7 +20,7 @@
                 @else
                     <div class="no-image-placeholder">🐾</div>
                 @endif
-                
+
                 <div class="estado-tag {{ $animal->estado }}">
                     {{ $animal->estado == 'disponible' ? '✓ Disponible' : 'Adoptado' }}
                 </div>
@@ -23,7 +30,7 @@
         {{-- Sección de Información --}}
         <div class="detalle-body">
             <h1 class="animal-name">{{ $animal->nombre }}</h1>
-            
+
             <div class="info-chips">
                 <div class="chip">
                     <span class="label">Especie</span>
@@ -45,16 +52,21 @@
             </div>
 
             <div class="acciones-detalle">
-                @if($animal->estado == 'disponible')
-                    <a href="{{ route('solicitudes.index', $animal->id) }}" class="btn-principal-nubeko">
-                        Solicitar Adopción
-                    </a>
+                @auth
+                    @if($animal->estado == 'disponible')
+                        <form action="{{ route('solicitudes.store', $animal->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn-principal-nubeko">Solicitar Adopción</button>
+                        </form>
+                    @else
+                        <div class="msg-adoptado">
+                            Este pequeño ya encontró un hogar
+                        </div>
+                    @endif
                 @else
-                    <div class="msg-adoptado">
-                        Este pequeño ya encontró un hogar
-                    </div>
-                @endif
-                
+                    <a href="{{ route('login') }}" class="btn-principal-nubeko">Inicia sesión para adoptar</a>
+                @endauth
+
                 <a href="{{ route('adopta.index') }}" class="btn-secundario-nubeko">
                     ← Volver a la lista
                 </a>

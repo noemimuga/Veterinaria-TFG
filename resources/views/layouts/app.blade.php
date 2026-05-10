@@ -550,19 +550,22 @@
 
             @auth
                 @if(Auth::user()->esRefugio())
-                    <li><a href="{{ route('animales.create') }}" class="btn-primary">Publicar Animal</a></li>
+                    <li>
+                        <a href="{{ route('animales.create') }}" class="btn-primary">Publicar Animal</a>
+                    </li>
                 @endif
                 <li><a href="{{ url('/profile') }}">Mi Cuenta</a></li>
-                   <li><form method="POST" action="{{ route('logout') }}">
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
                         <button type="submit" class="btn-primary" style="border:none; cursor:pointer;">Cerrar sesión</button>
-                        </form>
-                    </li>
+                    </form>
+                </li>
                 @else
-                <li><a href="{{ route('login') }}" class="btn-primary">Iniciar Sesión</a></li>
+                    <li><a href="{{ route('login') }}" class="btn-primary">Iniciar Sesión</a></li>
 
-                <li><a href="{{ route('register') }}" class="btn-primary">Registrarse</a></li>
+                    <li><a href="{{ route('register') }}" class="btn-primary">Registrarse</a></li>
             @endauth
 
         <button class="btn-simple" onclick="toggleDarkMode()">🌙</button>

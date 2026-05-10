@@ -7,6 +7,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Animal;
+use App\Models\Solicitud;
 
 class User extends Authenticatable
 {
@@ -48,8 +50,12 @@ class User extends Authenticatable
         return $this->tipo === 'refugio';
     }
 
+    public function esAdmin()
+    {
+        return $this->tipo === 'admin';
+    }
     public function esUsuario()
     {
-        return $this->tipo === 'usuario';
+        return $this->tipo === 'users';
     }
 }
