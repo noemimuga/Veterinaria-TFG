@@ -8,6 +8,20 @@
 
     <h1 class="mb-4">Panel del Refugio</h1>
 
+    <div class="stats-grid">
+
+    <div class="stat-card">
+        <h2>{{ $animales->count() }}</h2>
+        <p>Animales publicados</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ $solicitudesPendientes }}</h2>
+        <p>Solicitudes pendientes</p>
+    </div>
+
+</div>
+
     <div class="grid">
 
         <div class="card">
