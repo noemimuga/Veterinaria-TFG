@@ -11,4 +11,9 @@ class Favorito extends Model
     'user_id',
     'animal_id',
 ];
+
+public function animal()
+{
+    return $this->belongsTo(Animal::class);
+}
 }

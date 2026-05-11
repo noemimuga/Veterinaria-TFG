@@ -12,7 +12,7 @@ class FavoritoController extends Controller
     {
         $user = Auth::user();
 
-        $existe = Favorito::where('usuario_id', $user->id)
+        $existe = Favorito::where('user_id', $user->id)
             ->where('animal_id', $animalId)
             ->first();
 
@@ -21,10 +21,26 @@ class FavoritoController extends Controller
         }
 
         Favorito::create([
-            'usuario_id' => $user->id,
+            'user_id' => $user->id,
             'animal_id' => $animalId,
         ]);
 
         return back()->with('success', 'Añadido a favoritos ❤️');
     }
+    public function index()
+    {
+        $favoritos = auth()->user()
+            ->favoritos()
+            ->with('animal')
+            ->get();
+
+        return view('favoritos.index', compact('favoritos'));
+    }
+
+    public function destroy(Favorito $favorito)
+{
+    $favorito->delete();
+
+    return back()->with('success', 'Eliminado de favoritos 💔');
+}
 }

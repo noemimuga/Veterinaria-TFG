@@ -5,6 +5,7 @@ use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FavoritoController;
+use App\Http\Controllers\RefugioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,8 +71,13 @@ Route::middleware('auth')->group(function () {
     |-------------------------
     */
     Route::post('/favoritos/{animal}', [FavoritoController::class, 'store'])
-    ->name('favoritos.store')
-    ->middleware('auth');
+    ->name('favoritos.store');
+
+    Route::get('/favoritos', [FavoritoController::class, 'index'])
+        ->name('favoritos.index');
+
+    Route::delete('/favoritos/{favorito}', [FavoritoController::class, 'destroy'])
+        ->name('favoritos.destroy');
 
     /*
     |-------------------------
@@ -97,9 +103,8 @@ Route::middleware('auth')->group(function () {
     */
     Route::middleware('can:refugio')->group(function () {
 
-        Route::get('/refugio/dashboard', function () {
-            return view('refugio.dashboard');
-        })->name('refugio.dashboard');
+        Route::get('/refugio/dashboard', [RefugioController::class, 'dashboard'])
+            ->name('refugio.dashboard');
 
         Route::get('/solicitudes', [SolicitudController::class, 'index'])
             ->name('solicitudes.index');

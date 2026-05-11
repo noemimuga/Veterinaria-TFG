@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->tipo === 'users';
     }
+
+    public function favoritos()
+    {
+        return $this->hasMany(\App\Models\Favorito::class);
+    }
 }
