@@ -10,7 +10,7 @@
 
     <div class="profile-grid">
 
-        {{-- 👤 INFORMACIÓN USUARIO --}}
+        {{-- 👤 INFO --}}
         <div class="profile-card">
 
             <h2>👤 Información personal</h2>
@@ -18,21 +18,19 @@
             <p><strong>Nombre:</strong> {{ Auth::user()->name }}</p>
             <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
 
-            {{-- Solo si tienes columna rol o método --}}
-            @if(method_exists(Auth::user(), 'esRefugio') && Auth::user()->esRefugio())
-                <p><strong>Rol:</strong> Refugio</p>
-            @else
-                <p><strong>Rol:</strong> Usuario</p>
-            @endif
+            <p><strong>Rol:</strong> {{ Auth::user()->tipo ?? 'Usuario' }}</p>
 
         </div>
 
-        {{-- ⚙️ ACCIONES --}}
+        {{-- ⚙️ OPCIONES --}}
         <div class="profile-card">
 
             <h2>⚙️ Opciones</h2>
 
-            <a href="{{ route('profile.edit') }}" class="btn">Editar perfil</a>
+            <a href="{{ route('profile.custom') }}" class="btn">
+                Ver perfil
+            </a>
+
             <form method="POST" action="{{ route('logout') }}" style="margin-top:10px;">
                 @csrf
                 <button type="submit" class="btn btn-danger">
@@ -47,23 +45,22 @@
 
             <h2>❤️ Favoritos</h2>
 
-            <p>Animales que has guardado para adoptar más tarde.</p>
+            <p>Aquí verás tus animales guardados.</p>
 
-            {{-- aún no existe la ruta, pero ya la dejamos preparada --}}
             <a href="{{ route('favoritos.index') }}" class="btn">
-                Ver mis favoritos
+                Ver favoritos
             </a>
 
         </div>
 
-        {{-- 🏠 PANEL REFUGIO --}}
-        @if(method_exists(Auth::user(), 'esRefugio') && Auth::user()->esRefugio())
+        {{-- 🏠 REFUGIO --}}
+        @if(Auth::user()->tipo === 'refugio')
 
         <div class="profile-card highlight">
 
             <h2>🏠 Panel Refugio</h2>
 
-            <p>Gestión de animales y solicitudes de adopción.</p>
+            <p>Gestiona animales y solicitudes.</p>
 
             <a href="{{ route('refugio.dashboard') }}" class="btn">
                 Ir al panel
@@ -74,11 +71,9 @@
         @endif
 
     </div>
-
 </div>
 
 @endsection
-
 
 @section('extra-styles')
 
@@ -95,7 +90,7 @@
     margin-bottom:40px;
     color:#8b7355;
     font-size:2.5rem;
-    font-family: 'Cormorant', serif;
+    font-family:'Cormorant', serif;
 }
 
 .profile-grid{
@@ -109,11 +104,11 @@
     padding:2rem;
     border-radius:12px;
     box-shadow:0 5px 15px rgba(0,0,0,0.08);
-    transition: 0.3s;
+    transition:0.3s;
 }
 
 .profile-card:hover{
-    transform: translateY(-3px);
+    transform:translateY(-3px);
 }
 
 .profile-card h2{

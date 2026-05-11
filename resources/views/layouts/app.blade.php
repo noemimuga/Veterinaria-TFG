@@ -557,7 +557,7 @@
                         <a href="{{ route('refugio.dashboard') }}">Panel Refugio</a>
                     </li>
                 @endif
-                <li><a href="{{ url('/profile') }}">Mi Cuenta</a></li>
+                <li><a href="{{ url('/mi-cuenta') }}">Mi Cuenta</a></li>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
