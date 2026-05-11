@@ -172,7 +172,25 @@ class AnimalController extends Controller
     public function update(Request $request, string $id)
     {
         //
-    }
+        $animal = Animal::findOrFail($id);
+
+        if ($animal->refugio_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'especie' => 'required|string|max:50',
+            'raza' => 'nullable|string|max:50',
+            'edad' => 'integer',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        $animal->update($request->all());
+
+        return redirect()->route('refugio.dashboard')
+            ->with('success', 'Animal actualizado correctamente');
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -180,5 +198,15 @@ class AnimalController extends Controller
     public function destroy(string $id)
     {
         //
-    }
+        $animal = Animal::findOrFail($id);
+
+        if ($animal->refugio_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $animal->delete();
+
+        return redirect()->route('refugio.dashboard')
+            ->with('success', 'Animal eliminado');
+        }
 }

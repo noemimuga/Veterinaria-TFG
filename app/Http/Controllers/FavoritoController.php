@@ -12,7 +12,7 @@ class FavoritoController extends Controller
     {
         $user = Auth::user();
 
-        $existe = Favorito::where('user_id', $user->id)
+        $existe = Favorito::where('usuario_id', $user->id)
             ->where('animal_id', $animalId)
             ->first();
 
@@ -21,7 +21,7 @@ class FavoritoController extends Controller
         }
 
         Favorito::create([
-            'user_id' => $user->id,
+            'usuario_id' => $user->id,
             'animal_id' => $animalId,
         ]);
 

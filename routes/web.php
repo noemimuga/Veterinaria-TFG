@@ -97,6 +97,10 @@ Route::middleware('auth')->group(function () {
     */
     Route::middleware('can:refugio')->group(function () {
 
+        Route::get('/refugio/dashboard', function () {
+            return view('refugio.dashboard');
+        })->name('refugio.dashboard');
+
         Route::get('/solicitudes', [SolicitudController::class, 'index'])
             ->name('solicitudes.index');
 

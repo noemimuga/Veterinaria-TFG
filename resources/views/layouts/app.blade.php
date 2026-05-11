@@ -553,6 +553,9 @@
                     <li>
                         <a href="{{ route('animales.create') }}" class="btn-primary">Publicar Animal</a>
                     </li>
+                    <li>
+                        <a href="{{ route('refugio.dashboard') }}">Panel Refugio</a>
+                    </li>
                 @endif
                 <li><a href="{{ url('/profile') }}">Mi Cuenta</a></li>
                 <li>
