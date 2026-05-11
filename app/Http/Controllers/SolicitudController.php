@@ -36,13 +36,20 @@ class SolicitudController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store(Request $request, $animalId)
+    public function store(Request $request, $animalId)
     {
 
-       // $this->authorize('create', Solicitud::class);
-
+        // $this->authorize('create', Solicitud::class);
+        $request->validate([
+            'mensaje' => 'required|string',
+        ], [
+            'mensaje.required' => 'Debes escribir un mensaje para enviar la solicitud.',
+            'mensaje.min' => 'El mensaje es demasiado corto (mínimo 5 caracteres).',
+        ]);
+      
+// 2. Buscamos el animal o fallamos si no existe
         $animal = Animal::findOrFail($animalId);
-
+// 3. Comprobamos si ya existe una solicitud previa
         $yaExiste = Solicitud::where('animal_id', $animalId)
             ->where('usuario_id', Auth::id())
             ->first();
@@ -51,7 +58,7 @@ class SolicitudController extends Controller
             return redirect()->back()->with('error', 'Ya has solicitado este animal.');
         }
 
-        if($animal->estado !== 'disponible') {
+        if ($animal->estado !== 'disponible') {
             return redirect()->back()->with('error', 'Este animal ya no está disponible.');
         }
 
@@ -63,77 +70,77 @@ class SolicitudController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Solicitud enviada correctamente.');
-        }
-
-
-
-
-
-public function aceptarSolicitud(Solicitud $solicitud)
-{
-    //$this->authorize('update', $solicitud);
-
-    $animal = $solicitud->animal;
-
-    $solicitud->estado = 'aceptada';
-    $solicitud->save();
-
-    $animal->estado = 'adoptado';
-    $animal->save();
-
-    // Rechazar automáticamente las demás solicitudes
-    Solicitud::where('animal_id', $animal->id)
-        ->where('id', '!=', $solicitud->id)
-        ->update(['estado' => 'rechazada']);
-
-    // ✅ Notificación al usuario que fue aceptado
-    Mail::to($solicitud->user->email)->send(new SolicitudAceptada($solicitud));
-
-    // ✅ Notificación a los usuarios rechazados
-    $rechazadas = Solicitud::where('animal_id', $animal->id)
-        ->where('id', '!=', $solicitud->id)
-        ->get();
-
-    foreach ($rechazadas as $s) {
-        Mail::to($s->user->email)->send(new SolicitudRechazada($s));
     }
 
-    return back()->with('success', 'Solicitud aceptada, animal adoptado.');
-}
 
-public function rechazarSolicitud(Solicitud $solicitud)
-{
-    //$this->authorize('update', $solicitud);
 
-    $solicitud->estado = 'rechazada';
-    $solicitud->save();
 
-    // ✅ Notificación al usuario que fue rechazado
-    Mail::to($solicitud->user->email)->send(new SolicitudRechazada($solicitud));
 
-    return back()->with('success', 'Solicitud rechazada.');
-}
+    public function aceptarSolicitud(Solicitud $solicitud)
+    {
+        //$this->authorize('update', $solicitud);
+
+        $animal = $solicitud->animal;
+
+        $solicitud->estado = 'aceptada';
+        $solicitud->save();
+
+        $animal->estado = 'adoptado';
+        $animal->save();
+
+        // Rechazar automáticamente las demás solicitudes
+        Solicitud::where('animal_id', $animal->id)
+            ->where('id', '!=', $solicitud->id)
+            ->update(['estado' => 'rechazada']);
+
+        // Notificación al usuario que fue aceptado
+        Mail::to($solicitud->user->email)->send(new SolicitudAceptada($solicitud));
+
+        //Notificación a los usuarios rechazados
+        $rechazadas = Solicitud::where('animal_id', $animal->id)
+            ->where('id', '!=', $solicitud->id)
+            ->get();
+
+        foreach ($rechazadas as $s) {
+            Mail::to($s->user->email)->send(new SolicitudRechazada($s));
+        }
+
+        return back()->with('success', 'Solicitud aceptada, animal adoptado.');
+    }
+
+    public function rechazarSolicitud(Solicitud $solicitud)
+    {
+        //$this->authorize('update', $solicitud);
+
+        $solicitud->estado = 'rechazada';
+        $solicitud->save();
+
+        //Notificación al usuario que fue rechazado
+        Mail::to($solicitud->user->email)->send(new SolicitudRechazada($solicitud));
+
+        return back()->with('success', 'Solicitud rechazada.');
+    }
 
 
 
     /**
      * Display the specified resource.
      */
-public function show(Solicitud $solicitud)
-{
-    $user = Auth::user();
+    public function show(Solicitud $solicitud)
+    {
+        $user = Auth::user();
 
-    // Validación de acceso: solo el refugio propietario o el admin pueden ver
-    if (!$user->esRefugio() && !$user->esAdmin()) {
-        abort(403);
+        // Validación de acceso: solo el refugio propietario o el admin pueden ver
+        if (!$user->esRefugio() && !$user->esAdmin()) {
+            abort(403);
+        }
+
+        if ($user->esRefugio() && $solicitud->animal->refugio_id !== $user->id) {
+            abort(403);
+        }
+
+        return view('solicitudes.show', compact('solicitud'));
     }
-
-    if ($user->esRefugio() && $solicitud->animal->refugio_id !== $user->id) {
-        abort(403);
-    }
-
-    return view('solicitudes.show', compact('solicitud'));
-}
 
     /**
      * Show the form for editing the specified resource.
@@ -170,5 +177,4 @@ public function show(Solicitud $solicitud)
 
         return back()->with('success', 'Solicitud cancelada correctamente.');
     }
-
 }

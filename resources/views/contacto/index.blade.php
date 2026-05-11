@@ -19,11 +19,11 @@
 
                 <div class="stats">
                     <div class="stat-item">
-                        <strong>500+</strong>
+                        <strong>50+</strong>
                         <span>Adopciones</span>
                     </div>
                     <div class="stat-item">
-                        <strong>10+</strong>
+                        <strong>2+</strong>
                         <span>Años de labor</span>
                     </div>
                 </div>
@@ -42,8 +42,8 @@
 
                 <div class="info-list">
                     <div class="info-item">
-                        <span class="icon">📍</span>
-                        <p><strong>Ubicación:</strong> Calle Ejemplo 123, Madrid, España</p>
+                        <span class="icon">📍 Calle del Calvario, Madrid</span>
+                        <p><strong>Ubicación:</strong> </p>
                     </div>
                     <div class="info-item">
                         <span class="icon">📞</span>
@@ -80,7 +80,6 @@
 
     <h3 style="margin-bottom: 1rem;">Cómo llegar</h3>
 
-    {{-- Imagen del mapa (sin APIs, sin dependencias) --}}
      <iframe
         src="https://www.google.com/maps?q=C.+del+Calvario+Madrid&output=embed"
         width="100%"
@@ -118,7 +117,6 @@
         margin: 4rem 0;
     }
 
-    /* Estilos Nosotros */
     .nosotros-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
