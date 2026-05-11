@@ -9,6 +9,8 @@ class RefugioController extends Controller
 {
     public function dashboard()
     {
+        $refugio = auth()->user();
+
         $animales = Animal::where('refugio_id', auth()->id())->get();
 
         $solicitudesPendientes = Solicitud::whereHas('animal', function ($query) {
