@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Contacto y Nosotros - Refugio Nubeko')
+@section('title', 'Contacto y Nosotras - Refugio Nubeko')
 
 @section('content')
 <div class="container-contacto">
@@ -15,15 +15,20 @@
                 <span class="subtitle">Nuestra Misión</span>
                 <h2>Sobre Refugio Nubeko</h2>
                 <p>Somos una organización dedicada al rescate y rehabilitación de animales en situación de abandono. Creemos firmemente que cada mascota merece una segunda oportunidad en un hogar lleno de amor.</p>
+<<<<<<< HEAD
                 <p>Desde nuestra fundación, hemos ayudado a cientos de peludos a encontrar su familia ideal, trabajando con transparencia y pasión por el bienestar animal.</p>
 
+=======
+                <p>Desde nuestra fundación, hemos ayudado a cientos de perros y gatos a encontrar su familia ideal, trabajando con transparencia y pasión por el bienestar animal.</p>
+                
+>>>>>>> 1276582246ee4f59e69cf93a73638ab637ef876a
                 <div class="stats">
                     <div class="stat-item">
-                        <strong>500+</strong>
+                        <strong>50+</strong>
                         <span>Adopciones</span>
                     </div>
                     <div class="stat-item">
-                        <strong>10+</strong>
+                        <strong>2+</strong>
                         <span>Años de labor</span>
                     </div>
                 </div>
@@ -38,20 +43,29 @@
         <div class="contacto-grid">
             <div class="contacto-info">
                 <h2>Ponte en contacto</h2>
+<<<<<<< HEAD
                 <p>¿Tienes dudas sobre el proceso de adopción o quieres colaborar con nosotros? Estamos aquí para ayudarte.</p>
 
                 <div class="info-list">
                     <div class="info-item">
+                        <span class="icon">📍 Calle del Calvario, Madrid</span>
+                        <p><strong>Ubicación:</strong> </p>
+=======
+                <p>¿Tienes dudas sobre el proceso de adopción o quieres colaborar con nosotras? Estamos aquí para ayudarte.</p>
+                
+                <div class="info-list">
+                    <div class="info-item">
                         <span class="icon">📍</span>
-                        <p><strong>Ubicación:</strong> Calle Ejemplo 123, Madrid, España</p>
+                        <p><strong>Ubicación:</strong>  Calle del Calvario, Madrid</p>
+>>>>>>> 1276582246ee4f59e69cf93a73638ab637ef876a
                     </div>
                     <div class="info-item">
                         <span class="icon">📞</span>
-                        <p><strong>Teléfono:</strong> +34 912 345 678</p>
+                        <p><strong>Teléfono:</strong> +34 123 456 789</p>
                     </div>
                     <div class="info-item">
                         <span class="icon">✉️</span>
-                        <p><strong>Email:</strong> hola@refugionubeko.com</p>
+                        <p><strong>Email:</strong>  info@refugionubeko.com</p>
                     </div>
                 </div>
             </div>
@@ -80,7 +94,6 @@
 
     <h3 style="margin-bottom: 1rem;">Cómo llegar</h3>
 
-    {{-- Imagen del mapa (sin APIs, sin dependencias) --}}
      <iframe
         src="https://www.google.com/maps?q=C.+del+Calvario+Madrid&output=embed"
         width="100%"
@@ -118,7 +131,6 @@
         margin: 4rem 0;
     }
 
-    /* Estilos Nosotros */
     .nosotros-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;

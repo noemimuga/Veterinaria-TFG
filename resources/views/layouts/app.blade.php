@@ -579,14 +579,26 @@
     </header>
 
     <main>
-        @if(session('success'))
-            <div style="background: rgba(168, 137, 104, 0.15); color: var(--beige-700); padding: 1rem 1.5rem; border-radius: 10px; margin-bottom: 2rem; border-left: 4px solid var(--accent);">
-                {{ session('success') }}
-            </div>
-        @endif
+    {{-- Mensaje de Éxito (El que ya tenías) --}}
+    @if(session('success'))
+        <div style="background: rgba(34, 197, 94, 0.1); color: #15803d; padding: 1rem 1.5rem; border-radius: 10px; margin-bottom: 2rem; border-left: 4px solid #22c55e;">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        @yield('content')
-    </main>
+    {{-- Mensaje de Error de Validación --}}
+    @if ($errors->any())
+        <div style="background: rgba(239, 68, 68, 0.1); color: #b91c1c; padding: 1rem 1.5rem; border-radius: 10px; margin-bottom: 2rem; border-left: 4px solid #ef4444;">
+            <ul style="margin: 0; padding: 0; list-style: none;">
+                @foreach ($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @yield('content')
+</main>
 
     <footer>
         <div class="footer-content">
