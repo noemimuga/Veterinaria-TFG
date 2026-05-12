@@ -22,24 +22,6 @@
 
         </div>
 
-        {{--OPCIONES --}}
-        <div class="profile-card">
-
-            <h2>Opciones</h2>
-
-            <a href="{{ route('profile.custom') }}" class="btn">
-                Ver perfil
-            </a>
-
-            <form method="POST" action="{{ route('logout') }}" style="margin-top:10px;">
-                @csrf
-                <button type="submit" class="btn btn-danger">
-                    Cerrar sesión
-                </button>
-            </form>
-
-        </div>
-
         {{-- FAVORITOS -  Solo se muestra si no es un refugio--}}
         @if(Auth::user()->tipo !== 'refugio')
         <div class="profile-card">

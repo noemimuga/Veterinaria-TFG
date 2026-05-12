@@ -3,94 +3,100 @@
 @section('title', $animal->nombre . ' - Detalle de Adopción')
 
 @section('content')
-@if(session('success'))
-<div class="alert alert-success">{{ session('success') }}</div>
-@endif
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-@if(session('error'))
-<div class="alert alert-danger">{{ session('error') }}</div>
-@endif
-<div class="container-detalle">
-    <div class="card-detalle">
-        {{-- Sección de Imagen --}}
-        <div class="detalle-header">
-            <div class="image-wrapper">
-                @if($animal->foto)
-                <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
-                @else
-                <div class="no-image-placeholder">🐾</div>
-                @endif
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
-                <div class="estado-tag {{ $animal->estado }}">
-                    {{ $animal->estado == 'disponible' ? '✓ Disponible' : 'Adoptado' }}
-                </div>
-            </div>
-        </div>
+    <div class="container-detalle">
+        <div class="card-detalle">
+            {{-- Sección de Imagen --}}
+            <div class="detalle-header">
+                <div class="image-wrapper">
+                    @if($animal->foto)
+                        <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
+                    @else
+                        <div class="no-image-placeholder">🐾</div>
+                    @endif
 
-        {{-- Sección de Información --}}
-        <div class="detalle-body">
-            <h1 class="animal-name">{{ $animal->nombre }}</h1>
-
-            <div class="info-chips">
-                <div class="chip">
-                    <span class="label">Especie</span>
-                    <span class="value">{{ $animal->especie }}</span>
-                </div>
-                <div class="chip">
-                    <span class="label">Raza</span>
-                    <span class="value">{{ $animal->raza }}</span>
-                </div>
-                <div class="chip">
-                    <span class="label">Edad</span>
-                    <span class="value">{{ $animal->edad }}</span>
+                    <div class="estado-tag {{ $animal->estado }}">
+                        {{ $animal->estado == 'disponible' ? '✓ Disponible' : 'Adoptado' }}
+                    </div>
                 </div>
             </div>
 
-            <div class="descripcion-box">
-                <h3>Conoce a {{ $animal->nombre }}</h3>
-                <p>{{ $animal->descripcion }}</p>
-            </div>
+            {{-- Sección de Información --}}
+            <div class="detalle-body">
+                <h1 class="animal-name">{{ $animal->nombre }}</h1>
 
-            <div class="acciones-detalle">
-                @auth
-                @if($animal->estado == 'disponible')
-                {{-- Solo si no es un refugio --}}
-                @if(Auth::user()->tipo !== 'refugio')
-                <div class="solicitud-container">
-                    <a href="{{ route('solicitudes.create', $animal->id) }}" class="btn-principal-nubeko">
-                        Solicitar Adopción
+                <div class="info-chips">
+                    <div class="chip">
+                        <span class="label">Especie</span>
+                        <span class="value">{{ $animal->especie }}</span>
+                    </div>
+                    <div class="chip">
+                        <span class="label">Raza</span>
+                        <span class="value">{{ $animal->raza }}</span>
+                    </div>
+                    <div class="chip">
+                        <span class="label">Edad</span>
+                        <span class="value">{{ $animal->edad }}</span>
+                    </div>
+                </div>
+
+                <div class="descripcion-box">
+                    <h3>Conoce a {{ $animal->nombre }}</h3>
+                    <p>{{ $animal->descripcion }}</p>
+                </div>
+
+                {{-- CONTENEDOR DE BOTONES CORREGIDO --}}
+                <div class="acciones-detalle" style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
+                    
+                    @auth
+                        {{-- Logueado: Verificamos estado y tipo de usuario --}}
+                        @if($animal->estado == 'disponible')
+                            @if(Auth::user()->tipo !== 'refugio')
+                                <a href="{{ route('solicitudes.create', $animal->id) }}" class="btn-principal-nubeko"
+                                style="width:300px">
+                                    Solicitar Adopción
+                                </a>
+                            @endif
+                        @else
+                            <div class="msg-adoptado" style="font-weight: bold; color: var(--beige-600);">
+                                Este pequeño ya encontró un hogar
+                            </div>
+                        @endif
+
+                        {{-- Favoritos (solo si no es refugio) --}}
+                        @if(Auth::user()->tipo !== 'refugio')
+                            <form action="{{ route('favoritos.store', $animal->id) }}" method="POST" style="margin: 0;">
+                                @csrf
+                                <button type="submit" class="btn-favorito">
+                                    Añadir a favoritos
+                                </button>
+                            </form>
+                        @endif
+
+                    @else
+                        {{-- No logueado: Botón de Login --}}
+                        <a href="{{ route('login') }}" class="btn-principal-nubeko">
+                            Inicia sesión para adoptar
+                        </a>
+                    @endauth
+
+                    {{-- Botón Volver (Siempre visible y alineado) --}}
+                    <a href="{{ route('adopta.index') }}" class="btn-secundario-nubeko" style="text-decoration: underline;">
+                         Volver a la lista
                     </a>
-                </div>
-                @endif
-                @else
-                <div class="msg-adoptado">
-                    Este pequeño ya encontró un hogar
-                </div>
-                @endif
+                </div> 
 
-                {{-- Solo si no es refugio --}}
-                @if(Auth::user()->tipo !== 'refugio')
-                <form action="{{ route('favoritos.store', $animal->id) }}" method="POST" style="display: inline;">
-                    @csrf
-                    <button type="submit" class="btn-favorito">
-                        Añadir a favoritos
-                    </button>
-                </form>
-                @endif
-    
-
-                @else
-                {{-- si no esta logueado --}}
-                <a href="{{ route('login') }}" class="btn-principal-nubeko">Inicia sesión para adoptar</a>
-                @endauth
-
-                <a href="{{ route('adopta.index') }}" class="btn-secundario-nubeko">← Volver a la lista</a>
             </div>
-        </div>
-    </div>
-</div>
+        </div> 
+    </div> 
 @endsection
-
 @section('extra-styles')
 <style>
     .container-detalle {
