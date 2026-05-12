@@ -567,8 +567,7 @@
                 </li>
                 @else
                     <li><a href="{{ route('login') }}" class="btn-primary">Iniciar Sesión</a></li>
-
-                    <li><a href="{{ route('register') }}" class="btn-primary">Registrarse</a></li>
+                   
             @endauth
 
         <button class="btn-simple" onclick="toggleDarkMode()">🌙</button>
