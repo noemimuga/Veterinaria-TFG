@@ -6,58 +6,59 @@
 <div class="container-contacto">
 
     <!-- SECCIÓN: QUIÉNES SOMOS -->
-    <section class="nosotros-section">
-        <div class="nosotros-grid">
-            <div class="nosotros-image">
-                <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=1000" alt="Nuestro equipo">
-            </div>
-            <div class="nosotros-text">
-                <span class="subtitle">Nuestra Misión</span>
-                <h2>Sobre Refugio Nubeko</h2>
-                <p>Somos una organización dedicada al rescate y rehabilitación de animales en situación de abandono. Creemos firmemente que cada mascota merece una segunda oportunidad en un hogar lleno de amor.</p>
-<<<<<<< HEAD
-                <p>Desde nuestra fundación, hemos ayudado a cientos de peludos a encontrar su familia ideal, trabajando con transparencia y pasión por el bienestar animal.</p>
+    <section class="sobre-nosotros" style="max-width: 1000px; margin: 0 auto; padding: 4rem 2rem;">
 
-=======
-                <p>Desde nuestra fundación, hemos ayudado a cientos de perros y gatos a encontrar su familia ideal, trabajando con transparencia y pasión por el bienestar animal.</p>
-                
->>>>>>> 1276582246ee4f59e69cf93a73638ab637ef876a
-                <div class="stats">
-                    <div class="stat-item">
-                        <strong>50+</strong>
-                        <span>Adopciones</span>
-                    </div>
-                    <div class="stat-item">
-                        <strong>2+</strong>
-                        <span>Años de labor</span>
-                    </div>
-                </div>
+        {{-- Introducción Personal --}}
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-family: 'Cormorant', serif; font-size: 3rem; color: var(--beige-800); margin-bottom: 1.5rem;">Nuestra Historia</h2>
+            <p style="font-size: 1.2rem; color: var(--beige-700); line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                Somos dos compañeras a las que les apasionan los animales y que decidimos unirnos para ayudarles a encontrar un hogar donde sean felices.
+                Este proyecto nace del amor y del compromiso con los animales sin hogar.
+            </p>
+        </div>
+        <div><img src="{{ asset('img/imagenContacto.jpg') }}" alt="Gato y perro" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 15px; margin-bottom: 2rem;"></div>
+
+  
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+
+       
+            <div style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
+                <h3 style="color: var(--beige-800); margin-bottom: 1rem;text-align:center">Adopción</h3>
+                <p style="color: var(--beige-600);">No compres, adopta. Ese es nuestro lema. Miles de animales son abandonados cada año en España y estamos aquí para cambiar esa cifra.</p>
             </div>
+           
+            <div style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
+                <h3 style="color: var(--beige-800); margin-bottom: 1rem; text-align:center">Amor</h3>
+                <p style="color: var(--beige-600);">Nuestro amor por los animales mueve este proyecto. Queremos que cada perro y gato abandonado encuentre el calor de una familia.</p>
+            </div>
+       
+            <div style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
+                <h3 style="color: var(--beige-800); margin-bottom: 1rem; text-align:center">Esterilización</h3>
+                <p style="color: var(--beige-600);">Fomentamos la adopción responsable, la esterilización y el cuidado veterinario para mejorar la vida de los animales y evitar abandonos.</p>
+            </div>
+
+        
+            <div style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
+                <h3 style="color: var(--beige-800); margin-bottom: 1rem;text-align:center">Abuelitos</h3>
+                <p style="color: var(--beige-600);">También queremos recordar que los animales mayores merecen la misma oportunidad de ser adoptados. A veces los más especiales son los que más han esperado.</p>
+            </div>
+
         </div>
     </section>
 
     <hr class="separator">
 
     <!-- SECCIÓN: CONTACTO -->
-    <section class="contacto-section">
+   <section class="contacto-section">
         <div class="contacto-grid">
             <div class="contacto-info">
                 <h2>Ponte en contacto</h2>
-<<<<<<< HEAD
-                <p>¿Tienes dudas sobre el proceso de adopción o quieres colaborar con nosotros? Estamos aquí para ayudarte.</p>
+                <p>¿Tienes dudas sobre el proceso de adopción o quieres colaborar con nosotras? Estamos aquí para ayudarte.</p>
 
                 <div class="info-list">
                     <div class="info-item">
-                        <span class="icon">📍 Calle del Calvario, Madrid</span>
-                        <p><strong>Ubicación:</strong> </p>
-=======
-                <p>¿Tienes dudas sobre el proceso de adopción o quieres colaborar con nosotras? Estamos aquí para ayudarte.</p>
-                
-                <div class="info-list">
-                    <div class="info-item">
                         <span class="icon">📍</span>
-                        <p><strong>Ubicación:</strong>  Calle del Calvario, Madrid</p>
->>>>>>> 1276582246ee4f59e69cf93a73638ab637ef876a
+                        <p><strong>Ubicación:</strong> Calle del Calvario, Madrid</p>
                     </div>
                     <div class="info-item">
                         <span class="icon">📞</span>
@@ -65,7 +66,7 @@
                     </div>
                     <div class="info-item">
                         <span class="icon">✉️</span>
-                        <p><strong>Email:</strong>  info@refugionubeko.com</p>
+                        <p><strong>Email:</strong> info@refugionubeko.com</p>
                     </div>
                 </div>
             </div>
@@ -89,31 +90,32 @@
                 </form>
             </div>
         </div>
-        <!-- MAPA + UBICACIÓN -->
-<div style="margin-top: 2rem;">
+    </section>
+                    <!-- MAPA + UBICACIÓN -->
+                    <div style="margin-top: 2rem;">
 
-    <h3 style="margin-bottom: 1rem;">Cómo llegar</h3>
+                        <h3 style="margin-bottom: 1rem;">Cómo llegar</h3>
 
-     <iframe
-        src="https://www.google.com/maps?q=C.+del+Calvario+Madrid&output=embed"
-        width="100%"
-        height="300"
-        style="border:0; border-radius:15px;"
-        allowfullscreen=""
-        loading="lazy">
-    </iframe>
+                        <iframe
+                            src="https://www.google.com/maps?q=C.+del+Calvario+Madrid&output=embed"
+                            width="100%"
+                            height="300"
+                            style="border:0; border-radius:15px;"
+                            allowfullscreen=""
+                            loading="lazy">
+                        </iframe>
 
-    <p style="margin-top: 1rem;">
-        <strong>Dirección:</strong> Calle del Calvario, Madrid, España
-    </p>
+                        <p style="margin-top: 1rem;">
+                            <strong>Dirección:</strong> Calle del Calvario, Madrid, España
+                        </p>
 
-    <p>
-        <a href="https://www.google.com/maps?q=C.+del+Calvario+Madrid" target="_blank">
-            Ver en Google Maps
-        </a>
-    </p>
+                        <p>
+                            <a href="https://www.google.com/maps?q=C.+del+Calvario+Madrid" target="_blank">
+                                Ver en Google Maps
+                            </a>
+                        </p>
 
-</div>
+                    </div>
     </section>
 </div>
 
@@ -214,7 +216,8 @@
         color: var(--beige-700);
     }
 
-    .form-group input, .form-group textarea {
+    .form-group input,
+    .form-group textarea {
         width: 100%;
         padding: 0.8rem;
         border: 1.5px solid var(--beige-200);
@@ -241,8 +244,16 @@
     }
 
     @media (max-width: 768px) {
-        .nosotros-grid, .contacto-grid { grid-template-columns: 1fr; gap: 2rem; }
-        .nosotros-text h2 { font-size: 2.2rem; }
+
+        .nosotros-grid,
+        .contacto-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .nosotros-text h2 {
+            font-size: 2.2rem;
+        }
     }
 </style>
 @endsection

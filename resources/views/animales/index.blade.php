@@ -7,8 +7,9 @@
     <!-- SECCIÓN HERO-->
     <section class="hero">
         <div class="hero-content">
-            <h1>Encuentra a tu compañero de vida</h1>
-            <p>Conectamos animales que buscan un hogar con personas dispuestas a dar amor. Adopta, no compres.</p>
+            <h1>Bienvenid@ a nuestro refugio</h1>
+            <p>En Nubeko, transformamos el destino de animales rescatados dándoles una segunda oportunidad.
+            Al adoptar, no solo cambias su mundo, ellos también cambiarán el tuyo. </p>
 
             <div class="hero-actions">
                 <a href="{{ route('adopta.index') }}" class="btn-hero-primary">Quiero adoptar</a>

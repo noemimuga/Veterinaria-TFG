@@ -3,89 +3,100 @@
 @section('title', $animal->nombre . ' - Detalle de Adopción')
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-@if(session('error'))
-    <div class="alert alert-danger">{{ session('error') }}</div>
-@endif
-<div class="container-detalle">
-    <div class="card-detalle">
-        {{-- Sección de Imagen --}}
-        <div class="detalle-header">
-            <div class="image-wrapper">
-                @if($animal->foto)
-                    <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
-                @else
-                    <div class="no-image-placeholder">🐾</div>
-                @endif
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
 
-                <div class="estado-tag {{ $animal->estado }}">
-                    {{ $animal->estado == 'disponible' ? '✓ Disponible' : 'Adoptado' }}
-                </div>
-            </div>
-        </div>
-
-        {{-- Sección de Información --}}
-        <div class="detalle-body">
-            <h1 class="animal-name">{{ $animal->nombre }}</h1>
-
-            <div class="info-chips">
-                <div class="chip">
-                    <span class="label">Especie</span>
-                    <span class="value">{{ $animal->especie }}</span>
-                </div>
-                <div class="chip">
-                    <span class="label">Raza</span>
-                    <span class="value">{{ $animal->raza }}</span>
-                </div>
-                <div class="chip">
-                    <span class="label">Edad</span>
-                    <span class="value">{{ $animal->edad }}</span>
-                </div>
-            </div>
-
-            <div class="descripcion-box">
-                <h3>Conoce a {{ $animal->nombre }}</h3>
-                <p>{{ $animal->descripcion }}</p>
-            </div>
-
-            <div class="acciones-detalle">
-                @auth
-                    @if($animal->estado == 'disponible')
-                        <form action="{{ route('solicitudes.store', $animal->id) }}" method="POST">
-                            @csrf
-                            <textarea name="mensaje" placeholder="Escribe por qué quieres adoptar..." class="form-control"></textarea>
-                            <button type="submit" class="btn-principal-nubeko">Solicitar Adopción</button>
-                        </form>
+    <div class="container-detalle">
+        <div class="card-detalle">
+            {{-- Sección de Imagen --}}
+            <div class="detalle-header">
+                <div class="image-wrapper">
+                    @if($animal->foto)
+                        <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
                     @else
-                        <div class="msg-adoptado">
-                            Este pequeño ya encontró un hogar
-                        </div>
+                        <div class="no-image-placeholder">🐾</div>
                     @endif
 
-                    {{-- ❤️ FAVORITOS --}}
-                    @if($animal)
-                        <form action="{{ route('favoritos.store', $animal->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn-favorito">
-                                ❤️ Añadir a favoritos
-                            </button>
-                        </form>
-@endif
-
-                @else
-                    <a href="{{ route('login') }}" class="btn-principal-nubeko">Inicia sesión</a>
-                @endauth
-
-                <a href="{{ route('adopta.index') }}" class="btn-secundario-nubeko">← Volver a la lista</a>
+                    <div class="estado-tag {{ $animal->estado }}">
+                        {{ $animal->estado == 'disponible' ? '✓ Disponible' : 'Adoptado' }}
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-@endsection
 
+            {{-- Sección de Información --}}
+            <div class="detalle-body">
+                <h1 class="animal-name">{{ $animal->nombre }}</h1>
+
+                <div class="info-chips">
+                    <div class="chip">
+                        <span class="label">Especie</span>
+                        <span class="value">{{ $animal->especie }}</span>
+                    </div>
+                    <div class="chip">
+                        <span class="label">Raza</span>
+                        <span class="value">{{ $animal->raza }}</span>
+                    </div>
+                    <div class="chip">
+                        <span class="label">Edad</span>
+                        <span class="value">{{ $animal->edad }}</span>
+                    </div>
+                </div>
+
+                <div class="descripcion-box">
+                    <h3>Conoce a {{ $animal->nombre }}</h3>
+                    <p>{{ $animal->descripcion }}</p>
+                </div>
+
+                {{-- CONTENEDOR DE BOTONES CORREGIDO --}}
+                <div class="acciones-detalle" style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
+                    
+                    @auth
+                        {{-- Logueado: Verificamos estado y tipo de usuario --}}
+                        @if($animal->estado == 'disponible')
+                            @if(Auth::user()->tipo !== 'refugio')
+                                <a href="{{ route('solicitudes.create', $animal->id) }}" class="btn-principal-nubeko"
+                                style="width:300px">
+                                    Solicitar Adopción
+                                </a>
+                            @endif
+                        @else
+                            <div class="msg-adoptado" style="font-weight: bold; color: var(--beige-600);">
+                                Este pequeño ya encontró un hogar
+                            </div>
+                        @endif
+
+                        {{-- Favoritos (solo si no es refugio) --}}
+                        @if(Auth::user()->tipo !== 'refugio')
+                            <form action="{{ route('favoritos.store', $animal->id) }}" method="POST" style="margin: 0;">
+                                @csrf
+                                <button type="submit" class="btn-favorito">
+                                    Añadir a favoritos
+                                </button>
+                            </form>
+                        @endif
+
+                    @else
+                        {{-- No logueado: Botón de Login --}}
+                        <a href="{{ route('login') }}" class="btn-principal-nubeko">
+                            Inicia sesión para adoptar
+                        </a>
+                    @endauth
+
+                    {{-- Botón Volver (Siempre visible y alineado) --}}
+                    <a href="{{ route('adopta.index') }}" class="btn-secundario-nubeko" style="text-decoration: underline;">
+                         Volver a la lista
+                    </a>
+                </div> 
+
+            </div>
+        </div> 
+    </div> 
+@endsection
 @section('extra-styles')
 <style>
     .container-detalle {
@@ -99,14 +110,26 @@
         font-size: 0.9rem;
         color: var(--beige-500);
     }
+
     .breadcrumb-nubeko a {
         color: var(--beige-500);
         text-decoration: none;
         transition: color 0.3s;
     }
-    .breadcrumb-nubeko a:hover { color: var(--accent); }
-    .breadcrumb-nubeko .sep { margin: 0 10px; opacity: 0.5; }
-    .breadcrumb-nubeko .current { color: var(--beige-800); font-weight: 700; }
+
+    .breadcrumb-nubeko a:hover {
+        color: var(--accent);
+    }
+
+    .breadcrumb-nubeko .sep {
+        margin: 0 10px;
+        opacity: 0.5;
+    }
+
+    .breadcrumb-nubeko .current {
+        color: var(--beige-800);
+        font-weight: 700;
+    }
 
     /* Card Principal */
     .card-detalle {
@@ -153,8 +176,15 @@
         backdrop-filter: blur(8px);
     }
 
-    .estado-tag.disponible { background: rgba(255,255,255,0.9); color: #8b7355; }
-    .estado-tag.adoptado { background: var(--beige-700); color: white; }
+    .estado-tag.disponible {
+        background: rgba(255, 255, 255, 0.9);
+        color: #8b7355;
+    }
+
+    .estado-tag.adoptado {
+        background: var(--beige-700);
+        color: white;
+    }
 
     /* Contenido */
     .detalle-body {
@@ -242,7 +272,9 @@
         transition: color 0.3s;
     }
 
-    .btn-secundario-nubeko:hover { color: var(--beige-800); }
+    .btn-secundario-nubeko:hover {
+        color: var(--beige-800);
+    }
 
     .msg-adoptado {
         background: var(--beige-100);
@@ -254,27 +286,38 @@
     }
 
     .btn-favorito {
-    margin-top: 10px;
-    background: transparent;
-    border: 2px solid #d4a574;
-    color: #8b7355;
-    padding: 0.8rem;
-    border-radius: 50px;
-    width: 100%;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        margin-top: 10px;
+        background: transparent;
+        border: 2px solid #d4a574;
+        color: #8b7355;
+        padding: 0.8rem;
+        border-radius: 50px;
+        width: 100%;
+        cursor: pointer;
+        transition: 0.3s;
+    }
 
-.btn-favorito:hover {
-    background: #d4a574;
-    color: white;
-}
+    .btn-favorito:hover {
+        background: #d4a574;
+        color: white;
+    }
 
     @media (max-width: 768px) {
-        .card-detalle { grid-template-columns: 1fr; }
-        .image-wrapper { min-height: 300px; }
-        .detalle-body { padding: 2rem; }
-        .animal-name { font-size: 2.5rem; }
+        .card-detalle {
+            grid-template-columns: 1fr;
+        }
+
+        .image-wrapper {
+            min-height: 300px;
+        }
+
+        .detalle-body {
+            padding: 2rem;
+        }
+
+        .animal-name {
+            font-size: 2.5rem;
+        }
     }
 </style>
 @endsection

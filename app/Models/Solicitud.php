@@ -7,13 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Solicitud extends Model
 {
     //
-      //Para que Laravel sepa cual es el nombre de la tabla que debe mirar
-     protected $table = 'solicitudes';
+    //Para que Laravel sepa cual es el nombre de la tabla que debe mirar
+    protected $table = 'solicitudes';
 
     protected $fillable = [
         'usuario_id',
         'animal_id',
-        'mensaje',
+        'nombre_completo',
+        'datos_contacto',
+        'vivienda',
+        'motivo',
         'estado',
     ];
 
@@ -46,11 +49,4 @@ class Solicitud extends Model
     {
         return $this->estado === 'rechazada';
     }
-
-public function user()
-{
-    return $this->belongsTo(User::class, 'usuario_id');
 }
-
-}
-

@@ -47,7 +47,8 @@ class User extends Authenticatable
     //Devuelve true si es un refugio false si no. Ayuda a tener un código más limpio,legible y evitar errores
     public function esRefugio()
     {
-        return $this->tipo === 'refugio';
+        // strtolower convierte a minúsculas y trim quita espacios
+        return strtolower(trim($this->tipo)) === 'refugio';
     }
 
     public function esAdmin()

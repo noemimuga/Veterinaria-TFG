@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -319,74 +320,75 @@
 
         /* DARK MODE */
 
-.dark-mode {
-    background: #2b2b2b;
-    color: #f5f5f5;
-}
+        .dark-mode {
+            background: #2b2b2b;
+            color: #f5f5f5;
+        }
 
-/* HEADER */
-.dark-mode header {
-    background: #3a3a3a;
-    border-bottom: 1px solid #555;
-}
+        /* HEADER */
+        .dark-mode header {
+            background: #3a3a3a;
+            border-bottom: 1px solid #555;
+        }
 
-/* NAV */
-.dark-mode .nav-links a,
-.dark-mode .logo {
-    color: #f5f5f5;
-}
+        /* NAV */
+        .dark-mode .nav-links a,
+        .dark-mode .logo {
+            color: #f5f5f5;
+        }
 
-/* TARJETAS */
-.dark-mode .card,
-.dark-mode .card-box,
-.dark-mode .filtros {
-    background: #3a3a3a;
-    color: #f5f5f5;
-    border: 1px solid #555;
-}
+        /* TARJETAS */
+        .dark-mode .card,
+        .dark-mode .card-box,
+        .dark-mode .filtros {
+            background: #3a3a3a;
+            color: #f5f5f5;
+            border: 1px solid #555;
+        }
 
-/* TEXTOS */
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3,
-.dark-mode h4,
-.dark-mode p,
-.dark-mode label,
-.dark-mode li {
-    color: #f5f5f5;
-}
+        /* TEXTOS */
+        .dark-mode h1,
+        .dark-mode h2,
+        .dark-mode h3,
+        .dark-mode h4,
+        .dark-mode p,
+        .dark-mode label,
+        .dark-mode li {
+            color: #f5f5f5;
+        }
 
-/* INPUTS */
-.dark-mode input,
-.dark-mode select {
-    background: #4a4a4a;
-    color: white;
-    border: 1px solid #666;
-}
+        /* INPUTS */
+        .dark-mode input,
+        .dark-mode select {
+            background: #4a4a4a;
+            color: white;
+            border: 1px solid #666;
+        }
 
-/* FOOTER */
-.dark-mode footer {
-    background: #1f1f1f;
-}
+        /* FOOTER */
+        .dark-mode footer {
+            background: #1f1f1f;
+        }
 
-.dark-mode .footer-section p,
-.dark-mode .footer-section a,
-.dark-mode .footer-bottom {
-    color: #e0e0e0;
-}
+        .dark-mode .footer-section p,
+        .dark-mode .footer-section a,
+        .dark-mode .footer-bottom {
+            color: #e0e0e0;
+        }
 
-/* BOTONES */
-.dark-mode .btn-simple,
-.dark-mode .btn,
-.dark-mode .btn-primary {
-    background: #d4a574;
-    color: white;
-}
+        /* BOTONES */
+        .dark-mode .btn-simple,
+        .dark-mode .btn,
+        .dark-mode .btn-primary {
+            background: #d4a574;
+            color: white;
+        }
 
-/* ENLACES */
-.dark-mode a:hover {
-    color: #f0d9b5;
-}
+        /* ENLACES */
+        .dark-mode a:hover {
+            color: #f0d9b5;
+        }
+
         /* FOOTER */
         footer {
             background: linear-gradient(135deg, var(--beige-700) 0%, var(--beige-800) 100%);
@@ -462,6 +464,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -472,133 +475,147 @@
             animation: fadeInUp 0.6s ease backwards;
         }
 
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
     </style>
 
     @yield('extra-styles')
     <style>
-.container-dinamico {
-    max-width: 900px;
-    margin: auto;
-    padding: 2rem;
-}
+        .container-dinamico {
+            max-width: 900px;
+            margin: auto;
+            padding: 2rem;
+        }
 
-.titulo {
-    text-align: center;
-    margin-bottom: 2rem;
-}
+        .titulo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-/* TARJETAS */
-.card-box {
-    background: white;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    cursor: pointer;
-    transition: 0.3s;
-}
+        /* TARJETAS */
+        .card-box {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-.card-box:hover {
-    transform: translateY(-3px);
-}
+        .card-box:hover {
+            transform: translateY(-3px);
+        }
 
-/* CONTENIDO OCULTO */
-.hidden {
-    display: none;
-}
+        /* CONTENIDO OCULTO */
+        .hidden {
+            display: none;
+        }
 
-/* PASOS */
-.step {
-    background: #f5f1ea;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-left: 5px solid #d4a574;
-    border-radius: 8px;
-}
+        /* PASOS */
+        .step {
+            background: #f5f1ea;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 5px solid #d4a574;
+            border-radius: 8px;
+        }
 
-/* BOTONES */
-.btn-simple {
-    background: #d4a574;
-    color: white;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-}
+        /* BOTONES */
+        .btn-simple {
+            background: #d4a574;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
 
-.center {
-    text-align: center;
-}
-</style>
+        .center {
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
     <header>
-
         <nav>
-    <a href="{{ route('home') }}" class="logo">Refugio Nubeko</a>
+            <a href="{{ route('home') }}" class="logo">Refugio Nubeko</a>
 
-    <ul class="nav-links">
-        <li><a href="{{ route('home') }}">Inicio</a></li>
-        <li><a href="{{ route('adopta.index') }}">Adoptar</a></li>
-        <li><a href="{{ route('contacto.index') }}">Contacto</a></li>
+            <ul class="nav-links">
+                <li><a href="{{ route('home') }}">Inicio</a></li>
+                <li><a href="{{ route('adopta.index') }}">Adoptar</a></li>
 
-            @auth
+                @auth
                 @if(Auth::user()->esRefugio())
-                    <li>
-                        <a href="{{ route('animales.create') }}" class="btn-primary">Publicar Animal</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('refugio.dashboard') }}">Panel Refugio</a>
-                    </li>
+                <li><a href="{{ route('animales.create') }}">Publicar Animal</a></li>
+                <li><a href="{{ route('refugio.dashboard') }}">Panel Refugio</a></li>
+                @else
+                <li><a href="{{ route('contacto.index') }}">Contacto</a></li>
                 @endif
+
                 <li><a href="{{ url('/mi-cuenta') }}">Mi Cuenta</a></li>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-
                         <button type="submit" class="btn-primary" style="border:none; cursor:pointer;">Cerrar sesión</button>
                     </form>
                 </li>
                 @else
-                    <li><a href="{{ route('login') }}" class="btn-primary">Iniciar Sesión</a></li>
+                <li><a href="{{ route('contacto.index') }}">Contacto</a></li>
+                <li><a href="{{ route('login') }}" class="btn-primary">Iniciar Sesión</a></li>
+                @endauth
 
-                    <li><a href="{{ route('register') }}" class="btn-primary">Registrarse</a></li>
-            @endauth
-
-        <button class="btn-simple" onclick="toggleDarkMode()">🌙</button>
-        <a href="/lang/es"> <img src="{{ asset('img/flags/espana.png') }}" width="24"></a>
-        <a href="/lang/en"><img src="{{ asset('img/flags/ing.png') }}" width="24"></a>
-    </ul>
-</nav>
+                {{-- BOTÓN DARK MODE Y BANDERAS --}}
+                <li><button class="btn-simple" onclick="toggleDarkMode()">🌙</button></li>
+                <li><a href="/lang/es"><img src="{{ asset('img/flags/espana.png') }}" width="24" alt="Español"></a></li>
+                <li><a href="/lang/en"><img src="{{ asset('img/flags/ing.png') }}" width="24" alt="English"></a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-    {{-- Mensaje de Éxito (El que ya tenías) --}}
-    @if(session('success'))
+        {{-- Mensaje de Éxito --}}
+        @if(session('success'))
         <div style="background: rgba(34, 197, 94, 0.1); color: #15803d; padding: 1rem 1.5rem; border-radius: 10px; margin-bottom: 2rem; border-left: 4px solid #22c55e;">
             {{ session('success') }}
         </div>
-    @endif
+        @endif
 
-    {{-- Mensaje de Error de Validación --}}
-    @if ($errors->any())
+        {{-- Mensaje de Error de Validación --}}
+        @if ($errors->any())
         <div style="background: rgba(239, 68, 68, 0.1); color: #b91c1c; padding: 1rem 1.5rem; border-radius: 10px; margin-bottom: 2rem; border-left: 4px solid #ef4444;">
             <ul style="margin: 0; padding: 0; list-style: none;">
                 @foreach ($errors->all() as $error)
-                    <li> {{ $error }}</li>
+                <li> {{ $error }}</li>
                 @endforeach
             </ul>
         </div>
-    @endif
+        @endif
 
-    @yield('content')
-</main>
+        @yield('content')
+    </main>
 
     <footer>
         <div class="footer-content">
@@ -628,131 +645,131 @@
         </div>
     </footer>
 
-    <!-- 🍪 BANNER COOKIES -->
-<!-- 🍪 BANNER COOKIES -->
-<div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #4a3d30;
+    <!--BANNER COOKIES -->
+    <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #4a3d30;
     color: white; padding: 20px; text-align: center; z-index: 9999; display: none;">
 
-    Usamos cookies para mejorar la experiencia y habilitar funciones como el chat.
+        Usamos cookies para mejorar la experiencia y habilitar funciones como el chat.
 
-    <br><br>
+        <br><br>
 
-    <button onclick="aceptarCookies()">Aceptar</button>
-    <button onclick="rechazarCookies()">Rechazar</button>
-    <button onclick="mostrarPanel()">Configurar</button>
-</div>
+        <button onclick="aceptarCookies()">Aceptar</button>
+        <button onclick="rechazarCookies()">Rechazar</button>
+        <button onclick="mostrarPanel()">Configurar</button>
+    </div>
 
-<!-- ⚙️ PANEL CONFIGURACIÓN -->
-<div id="cookie-panel" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white;
+    <!--PANEL CONFIGURACIÓN -->
+    <div id="cookie-panel" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white;
     padding: 20px; z-index: 10000; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
 
-    <h3>Preferencias de cookies</h3>
+        <h3>Preferencias de cookies</h3>
 
-    <label>
-        <input type="checkbox" id="chatCookies"> Activar chat
-    </label>
+        <label>
+            <input type="checkbox" id="chatCookies"> Activar chat
+        </label>
 
-    <br><br>
+        <br><br>
 
-    <button onclick="guardarPreferencias()">Guardar</button>
-    <button onclick="cerrarTodo()">Cancelar</button>
-</div>
+        <button onclick="guardarPreferencias()">Guardar</button>
+        <button onclick="cerrarTodo()">Cancelar</button>
+    </div>
     @yield('extra-scripts')
 
-<script>
-    const EXPIRACION_DIAS = 7;
-    let chatCargado = false;
+    <script>
+        const EXPIRACION_DIAS = 7;
+        let chatCargado = false;
 
-    /* 💬 CARGAR CHAT */
-    function cargarChat() {
-        if (chatCargado) return;
-        chatCargado = true;
+        /* 💬 CARGAR CHAT */
+        function cargarChat() {
+            if (chatCargado) return;
+            chatCargado = true;
 
-        const s1 = document.createElement("script");
-        s1.src = "https://embed.tawk.to/69fb71d5ca8b551c36f24a66/1jnv39b4k";
-        s1.async = true;
-        document.body.appendChild(s1);
-    }
-
-    /* 🍪 MOSTRAR / OCULTAR */
-    function mostrarBanner() {
-        document.getElementById("cookie-banner").style.display = "block";
-    }
-
-    function cerrarTodo() {
-        document.getElementById("cookie-banner").style.display = "none";
-        document.getElementById("cookie-panel").style.display = "none";
-    }
-
-    function mostrarPanel() {
-        document.getElementById("cookie-panel").style.display = "block";
-    }
-
-    /* ✅ ACEPTAR */
-    function aceptarCookies() {
-        localStorage.setItem("cookiesAceptadas", "true");
-        localStorage.setItem("chatCookies", "true");
-        localStorage.setItem("cookieDate", Date.now());
-
-        cerrarTodo();
-        cargarChat();
-    }
-
-    /* ❌ RECHAZAR */
-    function rechazarCookies() {
-        localStorage.setItem("cookiesAceptadas", "false");
-        localStorage.setItem("chatCookies", "false");
-        localStorage.setItem("cookieDate", Date.now());
-
-        cerrarTodo();
-    }
-
-    /* 💾 GUARDAR CONFIG */
-    function guardarPreferencias() {
-        const chat = document.getElementById("chatCookies").checked;
-
-        localStorage.setItem("cookiesAceptadas", "true");
-        localStorage.setItem("chatCookies", chat ? "true" : "false");
-        localStorage.setItem("cookieDate", Date.now());
-
-        cerrarTodo();
-
-        if (chat) cargarChat();
-    }
-
-    /* 🚀 INICIALIZACIÓN PROFESIONAL */
-    document.addEventListener("DOMContentLoaded", function () {
-        const decision = localStorage.getItem("cookiesAceptadas");
-        const chat = localStorage.getItem("chatCookies");
-        const last = localStorage.getItem("cookieDate");
-
-        const ahora = Date.now();
-        const expira = EXPIRACION_DIAS * 24 * 60 * 60 * 1000;
-
-        const necesitaBanner =
-            !last || (ahora - last > expira);
-
-        if (necesitaBanner) {
-            mostrarBanner();
-            return;
+            const s1 = document.createElement("script");
+            s1.src = "https://embed.tawk.to/69fb71d5ca8b551c36f24a66/1jnv39b4k";
+            s1.async = true;
+            document.body.appendChild(s1);
         }
 
-        cerrarTodo();
+        /* MOSTRAR / OCULTAR */
+        function mostrarBanner() {
+            document.getElementById("cookie-banner").style.display = "block";
+        }
 
-        if (chat === "true") {
+        function cerrarTodo() {
+            document.getElementById("cookie-banner").style.display = "none";
+            document.getElementById("cookie-panel").style.display = "none";
+        }
+
+        function mostrarPanel() {
+            document.getElementById("cookie-panel").style.display = "block";
+        }
+
+        /* ACEPTAR */
+        function aceptarCookies() {
+            localStorage.setItem("cookiesAceptadas", "true");
+            localStorage.setItem("chatCookies", "true");
+            localStorage.setItem("cookieDate", Date.now());
+
+            cerrarTodo();
             cargarChat();
         }
-    });
-    function toggleDarkMode() {
 
-    document.body.classList.toggle("dark-mode");
+        /* RECHAZAR */
+        function rechazarCookies() {
+            localStorage.setItem("cookiesAceptadas", "false");
+            localStorage.setItem("chatCookies", "false");
+            localStorage.setItem("cookieDate", Date.now());
 
-    }
-</script>
+            cerrarTodo();
+        }
+
+        /* GUARDAR CONFIG */
+        function guardarPreferencias() {
+            const chat = document.getElementById("chatCookies").checked;
+
+            localStorage.setItem("cookiesAceptadas", "true");
+            localStorage.setItem("chatCookies", chat ? "true" : "false");
+            localStorage.setItem("cookieDate", Date.now());
+
+            cerrarTodo();
+
+            if (chat) cargarChat();
+        }
+
+        /* INICIALIZACIÓN PROFESIONAL */
+        document.addEventListener("DOMContentLoaded", function() {
+            const decision = localStorage.getItem("cookiesAceptadas");
+            const chat = localStorage.getItem("chatCookies");
+            const last = localStorage.getItem("cookieDate");
+
+            const ahora = Date.now();
+            const expira = EXPIRACION_DIAS * 24 * 60 * 60 * 1000;
+
+            const necesitaBanner = !last || (ahora - last > expira);
+
+            if (necesitaBanner) {
+                mostrarBanner();
+                return;
+            }
+
+            cerrarTodo();
+
+            if (chat === "true") {
+                cargarChat();
+            }
+        });
+
+        function toggleDarkMode() {
+
+            document.body.classList.toggle("dark-mode");
+
+        }
+    </script>
 
 
 
 
 
 </body>
+
 </html>

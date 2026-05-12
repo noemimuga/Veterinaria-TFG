@@ -25,7 +25,7 @@ class FavoritoController extends Controller
             'animal_id' => $animalId,
         ]);
 
-        return back()->with('success', 'Añadido a favoritos ❤️');
+        return back()->with('success', 'Añadido a favoritos');
     }
     public function index()
     {
@@ -41,6 +41,6 @@ class FavoritoController extends Controller
 {
     $favorito->delete();
 
-    return back()->with('success', 'Eliminado de favoritos 💔');
+    return back()->with('success', 'Eliminado de favoritos');
 }
 }
