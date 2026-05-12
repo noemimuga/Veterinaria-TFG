@@ -6,7 +6,7 @@
 
 <div class="container-favoritos">
 
-    <h1 class="titulo">❤️ Mis favoritos</h1>
+    <h1 class="titulo">Mis favoritos</h1>
 
     @if($favoritos->count() == 0)
         <div class="empty">
@@ -49,7 +49,7 @@
                             @method('DELETE')
 
                             <button type="submit" class="btn-danger">
-                                💔 Quitar de favoritos
+                             Quitar de favoritos
                             </button>
                         </form>
 

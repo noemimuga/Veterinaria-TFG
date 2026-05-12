@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
     |-------------------------
     */
     Route::post('/favoritos/{animal}', [FavoritoController::class, 'store'])
-    ->name('favoritos.store');
+        ->name('favoritos.store');
 
     Route::get('/favoritos', [FavoritoController::class, 'index'])
         ->name('favoritos.index');
@@ -79,14 +79,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/favoritos/{favorito}', [FavoritoController::class, 'destroy'])
         ->name('favoritos.destroy');
 
-    /*
-    |-------------------------
-    | DASHBOARD
-    |-------------------------
-    */
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+
+
+    Route::get('/animales', [AnimalController::class, 'index'])->name('animales.index');
+
 
     /*
     |-------------------------
@@ -119,7 +115,6 @@ Route::middleware('auth')->group(function () {
         Route::resource('animales', AnimalController::class)
             ->except(['index', 'show']);
     });
-
 });
 
 /*
@@ -137,4 +132,4 @@ Route::resource('animales', AnimalController::class)
 |--------------------------------------------------------------------------
 */
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -25,7 +25,7 @@
     <div class="grid">
 
         <div class="card">
-            <h2>🐶 Gestionar animales</h2>
+            <h2>Gestionar animales</h2>
             <p>Crear, editar y eliminar animales.</p>
 
             <a href="{{ route('animales.create') }}" class="btn">

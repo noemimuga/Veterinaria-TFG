@@ -65,12 +65,12 @@
                         </div>
                     @endif
 
-                    {{-- ❤️ FAVORITOS --}}
+                    {{-- FAVORITOS --}}
                     @if($animal)
                         <form action="{{ route('favoritos.store', $animal->id) }}" method="POST">
                             @csrf
                             <button type="submit" class="btn-favorito">
-                                ❤️ Añadir a favoritos
+                                 Añadir a favoritos
                             </button>
                         </form>
 @endif
