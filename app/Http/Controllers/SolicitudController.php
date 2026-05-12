@@ -30,51 +30,87 @@ class SolicitudController extends Controller
         return view('solicitudes.index', compact('solicitudes'));
     }
 
-
+    /**
+     * Muestra el formulario de adopción
+     */
+    public function create(int $animal_id)
+    {
+        $animal = Animal::findOrFail($animal_id);
+        return view('solicitudes.create', compact('animal'));
+    }
 
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $animalId)
+    public function store(Request $request, int $animal_id)
     {
 
-        // $this->authorize('create', Solicitud::class);
+        // 1. Asegurar usuario logueado
+        if (!auth()->check()) {
+            return redirect()->route('login')
+                ->with('error', 'Debes iniciar sesión para enviar una solicitud.');
+        }
+
+        // 2. Validación
         $request->validate([
-            'mensaje' => 'required|string',
+            'nombre_completo' => 'required|string|max:255',
+            'telefono'        => 'required|string|regex:/^[0-9\s]+$/',
+            'vivienda'        => 'required|string',
+            'motivo'          => 'required|string',
         ], [
-            'mensaje.required' => 'Debes escribir un mensaje para enviar la solicitud.',
-            'mensaje.min' => 'El mensaje es demasiado corto (mínimo 5 caracteres).',
-        ]);
-      
-// 2. Buscamos el animal o fallamos si no existe
-        $animal = Animal::findOrFail($animalId);
-// 3. Comprobamos si ya existe una solicitud previa
-        $yaExiste = Solicitud::where('animal_id', $animalId)
-            ->where('usuario_id', Auth::id())
-            ->first();
-
-        if ($yaExiste) {
-            return redirect()->back()->with('error', 'Ya has solicitado este animal.');
-        }
-
-        if ($animal->estado !== 'disponible') {
-            return redirect()->back()->with('error', 'Este animal ya no está disponible.');
-        }
-
-        Solicitud::create([
-            'animal_id' => $animalId,
-            'usuario_id' => Auth::id(),
-            'estado' => 'pendiente',
-            'mensaje' => $request->mensaje,
+            // Mensajes personalizados en español
+            'nombre_completo.required' => 'El nombre completo es obligatorio.',
+            'telefono.required' => 'El teléfono es obligatorio.',
+            'telefono.regex' => 'El teléfono solo puede contener números.',
+            'vivienda.required' => 'Debes indicar cómo es tu vivienda.',
+            'motivo.required' => 'Debes indicar el motivo de la adopción.',
         ]);
 
-        return redirect()->back()->with('success', 'Solicitud enviada correctamente.');
+        // 3. Comprobar que el animal existe
+        $animal = \App\Models\Animal::findOrFail($animal_id);
+
+        // 4. Evitar solicitudes duplicadas
+        $existe = \App\Models\Solicitud::where('usuario_id', auth()->id())
+            ->where('animal_id', $animal_id)
+            ->exists();
+
+
+        if ($existe) {
+            \Log::warning('Solicitud duplicada detectada');
+            return redirect()
+                ->route('solicitudes.create', $animal_id)
+                ->with('error', 'Ya has enviado una solicitud para este animal.')
+                ->withInput();
+        }
+
+        try {
+
+            // 5. Guardar solicitud
+            $solicitud = new \App\Models\Solicitud();
+
+            $solicitud->usuario_id = auth()->id();
+            $solicitud->animal_id = $animal_id;
+            $solicitud->nombre_completo = $request->nombre_completo;
+            $solicitud->datos_contacto = $request->telefono;
+            $solicitud->vivienda = $request->vivienda;
+            $solicitud->motivo = $request->motivo;
+            $solicitud->estado = 'pendiente';
+
+            $solicitud->save();
+
+            return redirect()
+                ->route('animales.show', $animal_id)
+                ->with('success', '¡Solicitud enviada correctamente!');
+        } catch (\Exception $e) {
+
+            \Log::error($e);
+
+            return back()
+                ->with('error', 'No se pudo guardar la solicitud. Inténtalo de nuevo.')
+                ->withInput();
+        }
     }
-
-
-
-
 
     public function aceptarSolicitud(Solicitud $solicitud)
     {

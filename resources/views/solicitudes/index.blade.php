@@ -311,7 +311,7 @@
 <header>
     <div class="header-content">
         <div class="logo">
-            🐾 Panel de solicitudes
+             Panel de solicitudes
         </div>
         <nav class="nav">
             <a href="{{ route('home') }}">Inicio</a>
@@ -363,7 +363,7 @@
                         @csrf
                         @method('PATCH')
                         <button class="btn aceptar">
-                            ✓ Aceptar solicitud
+                            Aceptar solicitud
                         </button>
                     </form>
 
@@ -371,7 +371,7 @@
                         @csrf
                         @method('PATCH')
                         <button class="btn rechazar">
-                            ✗ Rechazar solicitud
+                            Rechazar solicitud
                         </button>
                     </form>
                 </div>

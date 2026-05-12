@@ -82,6 +82,15 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/animales', [AnimalController::class, 'index'])->name('animales.index');
+Route::post('/solicitudes/{animal_id}', [SolicitudController::class, 'store'])->name('solicitudes.store');
+
+
+Route::middleware(['auth'])->group(function () {
+    // Formulario de preguntas
+    Route::get('/solicitar-adopcion/{animal_id}', [SolicitudController::class, 'create'])->name('solicitudes.create');
+    // Guardar la solicitud completa
+    Route::post('/solicitar-adopcion/{animal_id}', [SolicitudController::class, 'store'])->name('solicitudes.store');
+});
 
 
     /*
