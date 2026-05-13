@@ -99,6 +99,7 @@
                 <h3>{{ $animal->nombre }}</h3>
                 <p><strong>Raza:</strong> {{ $animal->raza }}</p>
                 <p><strong>Edad:</strong> {{ $animal->edad }} años</p>
+                <p><strong>Sexo:</strong> {{ $animal->sexo }} años</p>
 
                 <a href="{{ route('animales.show', $animal->id) }}" class="btn">Conocer a {{ $animal->nombre }}</a>
             </div>

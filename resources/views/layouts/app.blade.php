@@ -341,27 +341,54 @@
         .dark-mode .card,
         .dark-mode .card-box,
         .dark-mode .filtros {
-            background: #3a3a3a;
-            color: #f5f5f5;
+            background: #ffffff;
+            color: #4a4a4a;
             border: 1px solid #555;
         }
 
         /* TEXTOS */
         .dark-mode h1,
         .dark-mode h2,
-        .dark-mode h3,
         .dark-mode h4,
         .dark-mode p,
         .dark-mode label,
         .dark-mode li {
-            color: #f5f5f5;
+            color: #ffffff !important;
+        }
+
+        .dark-mode .intro-p {
+            color: #ffffff !important;
+        }
+
+
+        .dark-mode .tarjeta-blanca * {
+            color: #4a4a4a !important;
+        }
+
+        .dark-mode .categories-grid h3 {
+            color: #4a4a4a;
+        }
+
+        .dark-mode .card-body p {
+            color: #4a4a4a !important;
+        }
+
+        .dark-mode .card .form-label,
+        .black-mode .card .form-label {
+            color: #1a1a1a !important;
+        }
+
+        .dark-mode .card .form-control,
+        .dark-mode .card .form-select {
+            color: #1a1a1a !important;
+            background-color: #ffffff !important;
         }
 
         /* INPUTS */
         .dark-mode input,
         .dark-mode select {
             background: #4a4a4a;
-            color: white;
+            color: #ffffff;
             border: 1px solid #666;
         }
 
