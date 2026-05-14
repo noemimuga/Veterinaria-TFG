@@ -93,7 +93,7 @@
         @forelse($animales as $animal)
         <div class="card">
             <!-- Imagen del animal -->
-            <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
+            <img src="{{ asset('img/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
 
             <div class="card-body">
                 <h3>{{ $animal->nombre }}</h3>

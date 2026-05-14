@@ -91,7 +91,7 @@
         <?php $__empty_1 = true; $__currentLoopData = $animales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $animal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
         <div class="card">
             <!-- Imagen del animal -->
-            <img src="<?php echo e(asset('storage/' . $animal->foto)); ?>" alt="<?php echo e($animal->nombre); ?>">
+            <img src="<?php echo e(asset('img/' . $animal->foto)); ?>" alt="<?php echo e($animal->nombre); ?>">
 
             <div class="card-body">
                 <h3><?php echo e($animal->nombre); ?></h3>
