@@ -12,11 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('solicitudes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+             $table->id();
+            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('animal_id')->constrained('animales')->onDelete('cascade');
+            $table->string('nombre_completo');
+            $table->string('email');
+            $table->string('telefono');
+            $table->text('direccion');
+            $table->text('motivo');
             $table->enum('estado', ['pendiente', 'aceptada', 'rechazada'])->default('pendiente');
-            $table->text('mensaje');
+            $table->text('mensaje_rechazo')->nullable();
             $table->timestamps();
         });
 
