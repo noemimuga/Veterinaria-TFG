@@ -112,52 +112,48 @@ class SolicitudController extends Controller
         }
     }
 
-    public function aceptarSolicitud(Solicitud $solicitud)
+    public function aceptarSolicitud($id)
     {
-        //$this->authorize('update', $solicitud);
+        // 1. Buscamos la solicitud cargando al usuario y al animal
+        $solicitud = Solicitud::with(['animal', 'user'])->findOrFail($id);
 
-        $animal = $solicitud->animal;
-
+        // 2. Aceptamos esta solicitud
         $solicitud->estado = 'aceptada';
         $solicitud->save();
 
-        $animal->estado = 'adoptado';
-        $animal->save();
-
-        // Rechazar automáticamente las demás solicitudes
-        Solicitud::where('animal_id', $animal->id)
-            ->where('id', '!=', $solicitud->id)
+        // 3. RECHAZAR EL RESTO: Buscamos todas las solicitudes pendientes de ESTE animal
+        // y las pasamos a 'rechazada' automáticamente.
+        Solicitud::where('animal_id', $solicitud->animal_id)
+            ->where('id', '!=', $id) // No rechazamos la que acabamos de aceptar
+            ->where('estado', 'pendiente')
             ->update(['estado' => 'rechazada']);
 
-        // Notificación al usuario que fue aceptado
-        Mail::to($solicitud->user->email)->send(new SolicitudAceptada($solicitud));
+        // 4. ENVIAR EMAIL: Buscamos el email en la tabla 'users'
+        // Usamos el operador ?? para evitar errores si el usuario no tiene email
+        $emailDestino = $solicitud->user->email ?? null;
 
-        //Notificación a los usuarios rechazados
-        $rechazadas = Solicitud::where('animal_id', $animal->id)
-            ->where('id', '!=', $solicitud->id)
-            ->get();
-
-        foreach ($rechazadas as $s) {
-            Mail::to($s->user->email)->send(new SolicitudRechazada($s));
+        if ($emailDestino) {
+            Mail::to($emailDestino)->send(new SolicitudAceptada($solicitud));
         }
 
-        return back()->with('success', 'Solicitud aceptada, animal adoptado.');
-    }
-
-    public function rechazarSolicitud(Solicitud $solicitud)
-    {
-        //$this->authorize('update', $solicitud);
-
-        $solicitud->estado = 'rechazada';
-        $solicitud->save();
-
-        //Notificación al usuario que fue rechazado
-        Mail::to($solicitud->user->email)->send(new SolicitudRechazada($solicitud));
-
-        return back()->with('success', 'Solicitud rechazada.');
+        return redirect()->route('refugio.dashboard')
+            ->with('success', 'Solicitud aceptada. Las demás solicitudes para este animal han sido rechazadas.');
     }
 
 
+    public function rechazarSolicitud($id)
+{
+    // 1. Buscamos la solicitud por su ID
+    $solicitud = Solicitud::findOrFail($id);
+
+    // 2. Cambiamos el estado a rechazada
+    $solicitud->estado = 'rechazada';
+    $solicitud->save();
+
+    // 3. Volvemos al panel con un mensaje de éxito
+    return redirect()->route('refugio.dashboard')
+        ->with('success', 'La solicitud ha sido rechazada correctamente.');
+}
 
     /**
      * Display the specified resource.

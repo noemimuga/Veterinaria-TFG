@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         // ROLES DEL SISTEMA
         // -------------------------------
 
-        Gate::define('usuario', fn(User $user) => $user->tipo === 'users');
+        Gate::define('usuario', fn(User $user) => $user->tipo === 'user');
         Gate::define('refugio', fn(User $user) => $user->tipo === 'refugio');
         Gate::define('admin', fn(User $user) => $user->tipo === 'admin');
     }
