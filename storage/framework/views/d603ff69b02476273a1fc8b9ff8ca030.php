@@ -403,6 +403,11 @@
             color: #e0e0e0;
         }
 
+        .dark-mode .profile-card p,
+        .dark-mode .profile-card h2{
+            color:#4a4a4a !important;
+        }
+
         /* BOTONES */
         .dark-mode .btn-simple,
         .dark-mode .btn,
@@ -664,7 +669,7 @@
             <div class="footer-section">
                 <h4>Contacto</h4>
                 <p>📍 Calle del Calvario, Madrid</p>
-                <p>📞 +34 123 456 789</p>
+                <p>📞 +34 666 888 666</p>
                 <p>✉️ info@refugionubeko.com</p>
             </div>
         </div>

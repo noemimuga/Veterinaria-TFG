@@ -10,10 +10,10 @@
 
     <div class="profile-grid">
 
-        {{-- 👤 INFORMACIÓN USUARIO --}}
+        {{-- INFORMACIÓN USUARIO --}}
         <div class="profile-card">
 
-            <h2>👤 Información personal</h2>
+            <h2> Información personal</h2>
 
             <p><strong>Nombre:</strong> {{ Auth::user()->name }}</p>
             <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
@@ -27,10 +27,10 @@
 
         </div>
 
-        {{-- ⚙️ ACCIONES --}}
+        {{-- ACCIONES --}}
         <div class="profile-card">
 
-            <h2>⚙️ Opciones</h2>
+            <h2> Opciones</h2>
 
             <a href="{{ route('profile.edit') }}" class="btn">Editar perfil</a>
             <form method="POST" action="{{ route('logout') }}" style="margin-top:10px;">
@@ -42,10 +42,10 @@
 
         </div>
 
-        {{-- ❤️ FAVORITOS --}}
+        {{--  FAVORITOS --}}
         <div class="profile-card">
 
-            <h2>❤️ Favoritos</h2>
+            <h2> Favoritos</h2>
 
             <p>Animales que has guardado para adoptar más tarde.</p>
 
@@ -56,12 +56,12 @@
 
         </div>
 
-        {{-- 🏠 PANEL REFUGIO --}}
+        {{-- PANEL REFUGIO --}}
         @if(method_exists(Auth::user(), 'esRefugio') && Auth::user()->esRefugio())
 
         <div class="profile-card highlight">
 
-            <h2>🏠 Panel Refugio</h2>
+            <h2> Panel Refugio</h2>
 
             <p>Gestión de animales y solicitudes de adopción.</p>
 
