@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Animal;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AnimalController extends Controller
 {
@@ -164,34 +165,59 @@ class AnimalController extends Controller
     public function edit(string $id)
     {
         //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-        $animal = Animal::findOrFail($id);
+         $animal = Animal::findOrFail($id);
 
         if ($animal->refugio_id !== Auth::id()) {
             abort(403);
         }
 
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'especie' => 'required|string|max:50',
-            'raza' => 'nullable|string|max:50',
-            'edad' => 'integer',
-            'descripcion' => 'nullable|string',
-        ]);
+        return view('animales.edit', compact('animal'));
+    }
 
-        $animal->update($request->all());
+    /**
+     * Update the specified resource in storage.
+     */
+    /**
+ * Update the specified resource in storage.
+ */
+public function update(Request $request, string $id)
+{
+    $animal = Animal::findOrFail($id);
 
-        return redirect()->route('refugio.dashboard')
-            ->with('success', 'Animal actualizado correctamente');
+    if ($animal->refugio_id !== Auth::id()) {
+        abort(403);
+    }
+
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'especie' => 'required|string|max:50',
+        'raza' => 'nullable|string|max:50',
+        'edad' => 'nullable|integer',
+        'descripcion' => 'nullable|string',
+        'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+    ]);
+
+    $animal->nombre = $request->nombre;
+    $animal->especie = $request->especie;
+    $animal->raza = $request->raza;
+    $animal->edad = $request->edad;
+    $animal->descripcion = $request->descripcion;
+
+    if ($request->hasFile('foto')) {
+
+        if ($animal->foto) {
+            Storage::disk('public')->delete($animal->foto);
         }
 
+        $animal->foto = $request->file('foto')->store('animales', 'public');
+    }
+
+    $animal->save();
+
+    return redirect()
+        ->route('refugio.dashboard')
+        ->with('success', 'Animal actualizado correctamente');
+}
     /**
      * Remove the specified resource from storage.
      */
