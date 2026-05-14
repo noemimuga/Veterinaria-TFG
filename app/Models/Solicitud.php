@@ -14,10 +14,12 @@ class Solicitud extends Model
         'usuario_id',
         'animal_id',
         'nombre_completo',
-        'datos_contacto',
-        'vivienda',
+        'email',
+        'telefono',
+        'direccion',
         'motivo',
         'estado',
+        'mensaje_rechazo'
     ];
 
     //RELACIONES
