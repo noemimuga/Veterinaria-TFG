@@ -26,7 +26,7 @@ class Solicitud extends Model
     // Cada solicitud pertenece a un usuario
    public function user()
 {
-    return $this->belongsTo(User::class);
+    return $this->belongsTo(User::class,'usuario_id');
 }
     // Cada solicitud pertenece a un animal
     public function animal()

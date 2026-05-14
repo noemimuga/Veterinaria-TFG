@@ -62,7 +62,7 @@
                     </div>
                     <div class="columna-info">
                         <strong>Email:</strong>
-                        <p>{{ $solicitud->email }}</p>
+                        <p>{{ $solicitud->user->email ?? 'Sin email' }}</p>
                     </div>
                     <div class="columna-info">
                         <strong>Teléfono:</strong>
