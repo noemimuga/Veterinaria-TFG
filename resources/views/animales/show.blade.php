@@ -88,12 +88,23 @@
 
                         </form>
 
+<<<<<<< HEAD
                     @else
 
                         <button class="btn deshabilitado" disabled>
                             No disponible
                         </button>
 
+=======
+    <div class="container-detalle">
+        <div class="card-detalle">
+            {{-- Sección de Imagen --}}
+            <div class="detalle-header">
+                <div class="image-wrapper">
+                    @if($animal->foto)
+                       <img src="{{ asset('img/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
+                        <div class="no-image-placeholder">🐾</div>
+>>>>>>> 00718bdaca476c46d82296a6cba7478eb264b861
                     @endif
 
                 @endif
