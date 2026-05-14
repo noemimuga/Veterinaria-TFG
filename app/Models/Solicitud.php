@@ -14,19 +14,20 @@ class Solicitud extends Model
         'usuario_id',
         'animal_id',
         'nombre_completo',
-        'datos_contacto',
-        'vivienda',
+        'email',
+        'telefono',
+        'direccion',
         'motivo',
         'estado',
+        'mensaje_rechazo'
     ];
 
     //RELACIONES
     // Cada solicitud pertenece a un usuario
-    public function usuario()
-    {
-        return $this->belongsTo(User::class, 'usuario_id');
-    }
-
+   public function user()
+{
+    return $this->belongsTo(User::class,'usuario_id');
+}
     // Cada solicitud pertenece a un animal
     public function animal()
     {

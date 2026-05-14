@@ -57,7 +57,7 @@ class User extends Authenticatable
     }
     public function esUsuario()
     {
-        return $this->tipo === 'users';
+        return $this->tipo === 'user';
     }
 
     public function favoritos()

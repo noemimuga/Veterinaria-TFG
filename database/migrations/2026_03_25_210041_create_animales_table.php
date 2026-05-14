@@ -28,7 +28,7 @@ return new class extends Migration
              * onDelete('cascade'): si borramos un usuario - borra automáticamente todo lo que dependa de él
              */
 
-            $table->foreignId('refugio_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('refugio_id')->constrained('user')->onDelete('cascade');
             $table->timestamps();
         });
 

@@ -29,7 +29,7 @@ class SolicitudPolicy
      */
    public function create(User $user): bool
     {
-        return $user->tipo === 'users'; // o cualquier lógica que permita usuarios normales
+        return $user->tipo === 'user'; 
     }
 
     /**

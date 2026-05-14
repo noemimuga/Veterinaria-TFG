@@ -11,10 +11,10 @@
         {{-- Introducción Personal --}}
         <div style="text-align: center; margin-bottom: 4rem;">
             <h2 style="font-family: 'Cormorant', serif; font-size: 3rem; color: var(--beige-800); margin-bottom: 1.5rem;">Nuestra Historia</h2>
-            <p style="font-size: 1.2rem; color: var(--beige-700); line-height: 1.8; max-width: 800px; margin: 0 auto;">
+            <p class="intro-p" style="font-size: 1.2rem; color: var(--beige-700); line-height: 1.8; max-width: 800px; margin: 0 auto;">
                 Somos dos compañeras a las que les apasionan los animales y que decidimos unirnos para ayudarles a encontrar un hogar donde sean felices.
                 Este proyecto nace del amor y del compromiso con los animales sin hogar.
-            </p>
+</p>
         </div>
         <div><img src="{{ asset('img/imagenContacto.jpg') }}" alt="Gato y perro" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 15px; margin-bottom: 2rem;"></div>
 
@@ -22,25 +22,25 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
 
        
-            <div style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
+            <div class="tarjeta-blanca" style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
                 <h3 style="color: var(--beige-800); margin-bottom: 1rem;text-align:center">Adopción</h3>
-                <p style="color: var(--beige-600);">No compres, adopta. Ese es nuestro lema. Miles de animales son abandonados cada año en España y estamos aquí para cambiar esa cifra.</p>
+                <p >No compres, adopta. Ese es nuestro lema. Miles de animales son abandonados cada año en España y estamos aquí para cambiar esa cifra.</p>
             </div>
            
-            <div style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
+            <div class="tarjeta-blanca" style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
                 <h3 style="color: var(--beige-800); margin-bottom: 1rem; text-align:center">Amor</h3>
-                <p style="color: var(--beige-600);">Nuestro amor por los animales mueve este proyecto. Queremos que cada perro y gato abandonado encuentre el calor de una familia.</p>
+                <p >Nuestro amor por los animales mueve este proyecto. Queremos que cada perro y gato abandonado encuentre el calor de una familia.</p>
             </div>
        
-            <div style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
+            <div class="tarjeta-blanca" style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
                 <h3 style="color: var(--beige-800); margin-bottom: 1rem; text-align:center">Esterilización</h3>
-                <p style="color: var(--beige-600);">Fomentamos la adopción responsable, la esterilización y el cuidado veterinario para mejorar la vida de los animales y evitar abandonos.</p>
+                <p >Fomentamos la adopción responsable, la esterilización y el cuidado veterinario para mejorar la vida de los animales y evitar abandonos.</p>
             </div>
 
         
-            <div style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
+            <div class="tarjeta-blanca" style="background: var(--beige-50); padding: 2rem; border-radius: 15px; border-bottom: 3px solid var(--beige-300);">
                 <h3 style="color: var(--beige-800); margin-bottom: 1rem;text-align:center">Abuelitos</h3>
-                <p style="color: var(--beige-600);">También queremos recordar que los animales mayores merecen la misma oportunidad de ser adoptados. A veces los más especiales son los que más han esperado.</p>
+                <p >También queremos recordar que los animales mayores merecen la misma oportunidad de ser adoptados. A veces los más especiales son los que más han esperado.</p>
             </div>
 
         </div>
