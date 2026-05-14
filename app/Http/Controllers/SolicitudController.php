@@ -114,22 +114,21 @@ class SolicitudController extends Controller
 
     public function aceptarSolicitud($id)
     {
-        // 1. Buscamos la solicitud cargando al usuario y al animal
+        // Buscamos la solicitud cargando al usuario y al animal
         $solicitud = Solicitud::with(['animal', 'user'])->findOrFail($id);
 
         // 2. Aceptamos esta solicitud
         $solicitud->estado = 'aceptada';
         $solicitud->save();
 
-        // 3. RECHAZAR EL RESTO: Buscamos todas las solicitudes pendientes de ESTE animal
+        // RECHAZAR EL RESTO: Buscamos todas las solicitudes pendientes de ESTE animal
         // y las pasamos a 'rechazada' automáticamente.
         Solicitud::where('animal_id', $solicitud->animal_id)
             ->where('id', '!=', $id) // No rechazamos la que acabamos de aceptar
             ->where('estado', 'pendiente')
             ->update(['estado' => 'rechazada']);
 
-        // 4. ENVIAR EMAIL: Buscamos el email en la tabla 'users'
-        // Usamos el operador ?? para evitar errores si el usuario no tiene email
+        // ENVIAR EMAIL: Buscamos el email en la tabla 'users'
         $emailDestino = $solicitud->user->email ?? null;
 
         if ($emailDestino) {

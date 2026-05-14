@@ -17,8 +17,7 @@
             <div class="detalle-header">
                 <div class="image-wrapper">
                     @if($animal->foto)
-                        <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
-                    @else
+                       <img src="{{ asset('img/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
                         <div class="no-image-placeholder">🐾</div>
                     @endif
 
