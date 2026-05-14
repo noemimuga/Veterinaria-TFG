@@ -23,15 +23,13 @@ class SolicitudAceptada extends Mailable
         $this->solicitud = $solicitud;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+
+    public function build()
     {
-        return new Envelope(
-            subject: '¡Tu solicitud de adopción fue aceptada! 🎉',
-        );
+        return $this->view('emails.solicitud_aceptada')
+            ->subject('Tu solicitud de adopción ha sido aceptada');
     }
+
 
     /**
      * Get the message content definition.

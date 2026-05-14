@@ -11,7 +11,7 @@ class RefugioController extends Controller
     public function dashboard()
     {
         // Obtener todas las solicitudes ordenadas por más recientes
-        $solicitudes = Solicitud::with(['usuario', 'animal'])
+        $solicitudes = Solicitud::with(['user', 'animal'])
             ->orderBy('created_at', 'desc')
             ->get();
 

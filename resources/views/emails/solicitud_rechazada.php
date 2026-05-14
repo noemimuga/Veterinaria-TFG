@@ -60,8 +60,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Solicitud de adopción no aprobada 😢</h1>
-        <p>Hola {{ $solicitud->user->name }},</p>
+        <h1>Solicitud de adopción no aprobada </h1>
+        <p>Hola {{ $solicitud->user->nombre_completo }},</p>
         <p>Lamentablemente, tu solicitud de adopción para <strong>{{ $solicitud->animal->nombre }}</strong> ha sido rechazada por el refugio.</p>
         <p>No te desanimes, aún hay muchos otros animales que buscan un hogar. Puedes visitar nuestra lista y encontrar otra oportunidad para dar amor a un peludo.</p>
         <a href="{{ route('adopta.index') }}" class="btn">Ver otros animales</a>

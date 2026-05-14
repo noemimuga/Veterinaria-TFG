@@ -38,18 +38,18 @@
         <div class="tarjeta-solicitud" data-estado="{{ $solicitud->estado }}">
             <div class="encabezado-solicitud">
                 <div class="info-basica">
-                    <img src="{{ asset('storage/' . $solicitud->animal->foto) }}" 
-                         alt="{{ $solicitud->animal->nombre }}" 
-                         class="foto-mini">
+                    <img src="{{ asset('storage/' . $solicitud->animal->foto) }}"
+                        alt="{{ $solicitud->animal->nombre }}"
+                        class="foto-mini">
                     <div>
                         <h3>{{ $solicitud->animal->nombre }}</h3>
                         <p class="texto-secundario">{{ $solicitud->animal->raza }} - {{ $solicitud->animal->edad }} años</p>
                     </div>
                 </div>
                 <span class="etiqueta-estado {{ $solicitud->estado }}">
-                    @if($solicitud->estado === 'pendiente')  Pendiente
-                    @elseif($solicitud->estado === 'aceptada')  Aceptada
-                    @else  Rechazada
+                    @if($solicitud->estado === 'pendiente') Pendiente
+                    @elseif($solicitud->estado === 'aceptada') Aceptada
+                    @else Rechazada
                     @endif
                 </span>
             </div>
@@ -66,14 +66,10 @@
                     </div>
                     <div class="columna-info">
                         <strong>Teléfono:</strong>
-                        <p>{{ $solicitud->telefono }}</p>
+                        <p>{{ $solicitud->datos_contacto }}</p>
                     </div>
                 </div>
 
-                <div class="info-detalle">
-                    <strong>Dirección:</strong>
-                    <p>{{ $solicitud->direccion }}</p>
-                </div>
 
                 <div class="info-detalle">
                     <strong>Motivo de adopción:</strong>
@@ -87,22 +83,25 @@
                 </div>
                 @endif
 
-                <p class="fecha-solicitud">📅 Solicitado el {{ $solicitud->created_at->format('d/m/Y H:i') }}</p>
+                <p class="fecha-solicitud"> Solicitado el {{ $solicitud->created_at->format('d/m/Y H:i') }}</p>
             </div>
 
             {{-- Botones de acción solo para pendientes --}}
             @if($solicitud->estado === 'pendiente')
             <div class="acciones-solicitud">
-                <form method="POST" action="{{ route('refugio.aceptar', $solicitud->id) }}" style="display: inline;">
+                <form method="POST" action="{{ route('solicitudes.aceptar', $solicitud->id) }}" style="display: inline;">
                     @csrf
                     <button type="submit" class="boton-aceptar" onclick="return confirm('¿Aceptar esta solicitud?')">
-                        ✓ Aceptar
+                        Aceptar
                     </button>
                 </form>
 
-                <button class="boton-rechazar" onclick="mostrarModalRechazo({{ $solicitud->id }})">
-                    ✗ Rechazar
-                </button>
+                <form action="{{ route('solicitudes.rechazar', $solicitud->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    <button class="boton-rechazar" type="submit" class="btn-rechazar" onclick="return confirm('¿Estás seguro de que quieres rechazar esta solicitud?')">
+                        Rechazar
+                    </button>
+                </form>
             </div>
             @endif
         </div>
@@ -114,435 +113,401 @@
     </div>
 </div>
 
-{{-- Modal de rechazo --}}
-<div id="modal-rechazo" class="modal-overlay" style="display: none;">
-    <div class="modal-contenido">
-        <h3>Rechazar Solicitud</h3>
-        <form id="form-rechazo" method="POST">
-            @csrf
-            <label for="mensaje_rechazo" class="etiqueta">Motivo del rechazo:</label>
-            <textarea 
-                name="mensaje_rechazo" 
-                id="mensaje_rechazo" 
-                rows="4" 
-                class="entrada-texto"
-                placeholder="Explica por qué se rechaza esta solicitud..."
-                required></textarea>
-            
-            <div class="botones-modal">
-                <button type="submit" class="boton-confirmar">Confirmar Rechazo</button>
-                <button type="button" class="boton-cancelar" onclick="cerrarModal()">Cancelar</button>
-            </div>
-        </form>
-    </div>
-</div>
 
 <style>
-.contenedor-panel {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
-}
+    .contenedor-panel {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
 
-.titulo-panel {
-    font-family: 'Cormorant', serif;
-    font-size: 2.5rem;
-    color: var(--beige-800);
-    margin-bottom: 2rem;
-    text-align: center;
-}
+    .titulo-panel {
+        font-family: 'Cormorant', serif;
+        font-size: 2.5rem;
+        color: var(--beige-800);
+        margin-bottom: 2rem;
+        text-align: center;
+    }
 
-/* ESTADÍSTICAS */
-.estadisticas {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-}
+    /* ESTADÍSTICAS */
+    .estadisticas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
 
-.tarjeta-estadistica {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 4px 15px var(--shadow);
-    border-left: 5px solid;
-}
+    .tarjeta-estadistica {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 4px 15px var(--shadow);
+        border-left: 5px solid;
+    }
 
-.tarjeta-estadistica.pendiente { border-left-color: #f59e0b; }
-.tarjeta-estadistica.aceptada { border-left-color: #10b981; }
-.tarjeta-estadistica.rechazada { border-left-color: #ef4444; }
+    .tarjeta-estadistica.pendiente {
+        border-left-color: #f59e0b;
+    }
 
-.tarjeta-estadistica h3 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 0;
-}
+    .tarjeta-estadistica.aceptada {
+        border-left-color: #10b981;
+    }
 
-.tarjeta-estadistica p {
-    margin: 0.5rem 0 0 0;
-    color: var(--beige-600);
-}
+    .tarjeta-estadistica.rechazada {
+        border-left-color: #ef4444;
+    }
 
-/* TABS */
-.subtitulo-panel {
-    font-family: 'Cormorant', serif;
-    font-size: 2rem;
-    color: var(--beige-800);
-    margin-bottom: 1rem;
-}
+    .tarjeta-estadistica h3 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 0;
+    }
 
-.tabs-filtro {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
+    .tarjeta-estadistica p {
+        margin: 0.5rem 0 0 0;
+        color: var(--beige-600);
+    }
 
-.tab-boton {
-    padding: 0.7rem 1.5rem;
-    background: white;
-    border: 2px solid var(--beige-300);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-weight: 500;
-}
+    /* TABS */
+    .subtitulo-panel {
+        font-family: 'Cormorant', serif;
+        font-size: 2rem;
+        color: var(--beige-800);
+        margin-bottom: 1rem;
+    }
 
-.tab-boton.activo {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-}
+    .tabs-filtro {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
 
-.tab-boton:hover {
-    border-color: var(--accent);
-}
+    .tab-boton {
+        padding: 0.7rem 1.5rem;
+        background: white;
+        border: 2px solid var(--beige-300);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
 
-/* SOLICITUDES */
-.lista-solicitudes {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
+    .tab-boton.activo {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+    }
 
-.tarjeta-solicitud {
-    background: white;
-    border-radius: 15px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 15px var(--shadow);
-    border: 1px solid var(--beige-200);
-    transition: all 0.3s;
-}
+    .tab-boton:hover {
+        border-color: var(--accent);
+    }
 
-.tarjeta-solicitud:hover {
-    box-shadow: 0 8px 25px var(--shadow-hover);
-}
-
-.encabezado-solicitud {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--beige-100);
-}
-
-.info-basica {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-.foto-mini {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-.texto-secundario {
-    color: var(--beige-600);
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-.etiqueta-estado {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.etiqueta-estado.pendiente {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.etiqueta-estado.aceptada {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.etiqueta-estado.rechazada {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-/* CUERPO */
-.cuerpo-solicitud {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.fila-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.columna-info strong {
-    display: block;
-    color: var(--beige-700);
-    margin-bottom: 0.3rem;
-}
-
-.columna-info p {
-    margin: 0;
-    color: var(--beige-800);
-}
-
-.info-detalle {
-    margin-top: 0.5rem;
-}
-
-.info-detalle strong {
-    display: block;
-    color: var(--beige-700);
-    margin-bottom: 0.3rem;
-}
-
-.info-detalle p {
-    margin: 0;
-    color: var(--beige-800);
-    line-height: 1.6;
-}
-
-.mensaje-rechazo {
-    background: #fee2e2;
-    padding: 1rem;
-    border-radius: 10px;
-    border-left: 4px solid #ef4444;
-}
-
-.fecha-solicitud {
-    color: var(--beige-500);
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-}
-
-/* ACCIONES */
-.acciones-solicitud {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 2px solid var(--beige-100);
-}
-
-.boton-aceptar,
-.boton-rechazar {
-    flex: 1;
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.boton-aceptar {
-    background: #10b981;
-    color: white;
-}
-
-.boton-aceptar:hover {
-    background: #059669;
-    transform: translateY(-2px);
-}
-
-.boton-rechazar {
-    background: #ef4444;
-    color: white;
-}
-
-.boton-rechazar:hover {
-    background: #dc2626;
-    transform: translateY(-2px);
-}
-
-/* MODAL */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal-contenido {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
-
-.modal-contenido h3 {
-    font-family: 'Cormorant', serif;
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: var(--beige-800);
-}
-
-.botones-modal {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.boton-confirmar,
-.boton-cancelar {
-    flex: 1;
-    padding: 0.8rem;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.boton-confirmar {
-    background: #ef4444;
-    color: white;
-}
-
-.boton-confirmar:hover {
-    background: #dc2626;
-}
-
-.boton-cancelar {
-    background: var(--beige-200);
-    color: var(--beige-700);
-}
-
-.boton-cancelar:hover {
-    background: var(--beige-300);
-}
-
-.sin-solicitudes {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--beige-500);
-}
-
-/* DARK MODE */
-.dark-mode .tarjeta-estadistica,
-.dark-mode .tarjeta-solicitud,
-.dark-mode .modal-contenido {
-    background: #2d2d2d;
-    border-color: #555;
-}
-
-.dark-mode .titulo-panel,
-.dark-mode .subtitulo-panel,
-.dark-mode .modal-contenido h3 {
-    color: #f5e6d3;
-}
-
-.dark-mode .tab-boton {
-    background: #3a3a3a;
-    border-color: #555;
-    color: #f5e6d3;
-}
-
-.dark-mode .tab-boton.activo {
-    background: var(--accent);
-    color: white;
-}
-
-.dark-mode .columna-info strong,
-.dark-mode .info-detalle strong {
-    color: #f5e6d3;
-}
-
-.dark-mode .columna-info p,
-.dark-mode .info-detalle p {
-    color: #f5e6d3;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .encabezado-solicitud {
+    /* SOLICITUDES */
+    .lista-solicitudes {
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .tarjeta-solicitud {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px var(--shadow);
+        border: 1px solid var(--beige-200);
+        transition: all 0.3s;
+    }
+
+    .tarjeta-solicitud:hover {
+        box-shadow: 0 8px 25px var(--shadow-hover);
+    }
+
+    .encabezado-solicitud {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--beige-100);
+    }
+
+    .info-basica {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .foto-mini {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .texto-secundario {
+        color: var(--beige-600);
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .etiqueta-estado {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .etiqueta-estado.pendiente {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .etiqueta-estado.aceptada {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .etiqueta-estado.rechazada {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    /* CUERPO */
+    .cuerpo-solicitud {
+        display: flex;
+        flex-direction: column;
         gap: 1rem;
     }
-    
+
     .fila-info {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
     }
-    
-    .tabs-filtro {
-        flex-direction: column;
+
+    .columna-info strong {
+        display: block;
+        color: var(--beige-700);
+        margin-bottom: 0.3rem;
     }
-}
+
+    .columna-info p {
+        margin: 0;
+        color: var(--beige-800);
+    }
+
+    .info-detalle {
+        margin-top: 0.5rem;
+    }
+
+    .info-detalle strong {
+        display: block;
+        color: var(--beige-700);
+        margin-bottom: 0.3rem;
+    }
+
+    .info-detalle p {
+        margin: 0;
+        color: var(--beige-800);
+        line-height: 1.6;
+    }
+
+    .mensaje-rechazo {
+        background: #fee2e2;
+        padding: 1rem;
+        border-radius: 10px;
+        border-left: 4px solid #ef4444;
+    }
+
+    .fecha-solicitud {
+        color: var(--beige-500);
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+
+    /* ACCIONES */
+    .acciones-solicitud {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        border-top: 2px solid var(--beige-100);
+    }
+
+    .boton-aceptar,
+    .boton-rechazar {
+        flex: 1;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .boton-aceptar {
+        background: #10b981;
+        color: white;
+    }
+
+    .boton-aceptar:hover {
+        background: #059669;
+        transform: translateY(-2px);
+    }
+
+    .boton-rechazar {
+        background: #ef4444;
+        color: white;
+    }
+
+    .boton-rechazar:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+    }
+
+    /* MODAL */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-contenido {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-contenido h3 {
+        font-family: 'Cormorant', serif;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: var(--beige-800);
+    }
+
+    .botones-modal {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .boton-confirmar,
+    .boton-cancelar {
+        flex: 1;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .boton-confirmar {
+        background: #ef4444;
+        color: white;
+    }
+
+    .boton-confirmar:hover {
+        background: #dc2626;
+    }
+
+    .boton-cancelar {
+        background: var(--beige-200);
+        color: var(--beige-700);
+    }
+
+    .boton-cancelar:hover {
+        background: var(--beige-300);
+    }
+
+    .sin-solicitudes {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--beige-500);
+    }
+
+    /* DARK MODE */
+    .dark-mode .tarjeta-estadistica,
+    .dark-mode .tarjeta-solicitud,
+    .dark-mode .modal-contenido {
+        background: #2d2d2d;
+        border-color: #555;
+    }
+
+    .dark-mode .titulo-panel,
+    .dark-mode .subtitulo-panel,
+    .dark-mode .modal-contenido h3 {
+        color: #f5e6d3;
+    }
+
+    .dark-mode .tab-boton {
+        background: #3a3a3a;
+        border-color: #555;
+        color: #f5e6d3;
+    }
+
+    .dark-mode .tab-boton.activo {
+        background: var(--accent);
+        color: white;
+    }
+
+    .dark-mode .columna-info strong,
+    .dark-mode .info-detalle strong {
+        color: #f5e6d3;
+    }
+
+    .dark-mode .columna-info p,
+    .dark-mode .info-detalle p {
+        color: #f5e6d3;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .encabezado-solicitud {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .fila-info {
+            grid-template-columns: 1fr;
+        }
+
+        .tabs-filtro {
+            flex-direction: column;
+        }
+    }
 </style>
 
 <script>
-function filtrarPor(estado) {
-    const solicitudes = document.querySelectorAll('.tarjeta-solicitud');
-    const botones = document.querySelectorAll('.tab-boton');
-    
-    // Actualizar botones activos
-    botones.forEach(btn => btn.classList.remove('activo'));
-    event.target.classList.add('activo');
-    
-    // Filtrar solicitudes
-    solicitudes.forEach(solicitud => {
-        if (estado === 'todas') {
-            solicitud.style.display = 'block';
-        } else {
-            solicitud.style.display = solicitud.dataset.estado === estado ? 'block' : 'none';
-        }
-    });
-}
+    function filtrarPor(estado) {
+        const solicitudes = document.querySelectorAll('.tarjeta-solicitud');
+        const botones = document.querySelectorAll('.tab-boton');
 
-function mostrarModalRechazo(solicitudId) {
-    const modal = document.getElementById('modal-rechazo');
-    const form = document.getElementById('form-rechazo');
-    form.action = `/refugio/solicitud/${solicitudId}/rechazar`;
-    modal.style.display = 'flex';
-}
+        // Actualizar botones activos
+        botones.forEach(btn => btn.classList.remove('activo'));
+        event.target.classList.add('activo');
 
-function cerrarModal() {
-    const modal = document.getElementById('modal-rechazo');
-    modal.style.display = 'none';
-    document.getElementById('mensaje_rechazo').value = '';
-}
-
-// Cerrar modal al hacer clic fuera
-document.getElementById('modal-rechazo')?.addEventListener('click', function(e) {
-    if (e.target === this) {
-        cerrarModal();
+        // Filtrar solicitudes
+        solicitudes.forEach(solicitud => {
+            if (estado === 'todas') {
+                solicitud.style.display = 'block';
+            } else {
+                solicitud.style.display = solicitud.dataset.estado === estado ? 'block' : 'none';
+            }
+        });
     }
-});
 </script>
 @endsection

@@ -60,11 +60,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>¡Tu solicitud fue aceptada! 🎉</h1>
-        <p>Hola {{ $solicitud->user->name }},</p>
+        <h1>¡Tu solicitud fue aceptada!</h1>
+        <p>Hola {{ $solicitud->nombre_completo }},</p>
         <p>¡Felicitaciones! Tu solicitud de adopción para <strong>{{ $solicitud->animal->nombre }}</strong> ha sido aceptada por el refugio.</p>
         <p>El animal ahora está oficialmente adoptado, y el refugio se pondrá en contacto contigo para los siguientes pasos.</p>
-        <a href="{{ route('adopta.show', $solicitud->animal->id) }}" class="btn">Ver detalles del animal</a>
+        <a href="{{ route('adopta.index', $solicitud->animal->id) }}" class="btn">Ver detalles del animal</a>
         <div class="footer">
             Este correo es automático, por favor no respondas.
         </div>
