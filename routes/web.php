@@ -8,9 +8,9 @@ use App\Http\Controllers\FavoritoController;
 use App\Http\Controllers\RefugioController;
 
 /*
-|--------------------------------------------------------------------------
+|
 | RUTAS PÚBLICAS
-|--------------------------------------------------------------------------
+|
 */
 
 // Home
@@ -21,9 +21,9 @@ Route::get('/adopta', [AnimalController::class, 'adopta'])->name('adopta.index')
 Route::view('/contacto', 'contacto.index')->name('contacto.index');
 
 /*
-|--------------------------------------------------------------------------
+|
 | PÁGINAS INFORMATIVAS
-|--------------------------------------------------------------------------
+|
 */
 
 Route::view('/faq', 'faq')->name('faq');
@@ -35,17 +35,16 @@ Route::view('/aviso-legal', 'legal')->name('legal');
 
 
 /*
-|--------------------------------------------------------------------------
-| ANIMALES PÚBLICOS
-|--------------------------------------------------------------------------
+|
+|
 */
 
 //Route::resource('animales', AnimalController::class)
     //->only(['index', 'show']);
 /*
-|--------------------------------------------------------------------------
+|
 | CAMBIO DE IDIOMA
-|--------------------------------------------------------------------------
+|
 */
 
 Route::get('/lang/{locale}', function ($locale) {
@@ -56,19 +55,19 @@ Route::get('/lang/{locale}', function ($locale) {
 });
 
 /*
-|--------------------------------------------------------------------------
+|
 | RUTAS PROTEGIDAS (LOGIN)
-|--------------------------------------------------------------------------
+|
 */
 
 Route::middleware('auth')->group(function () {
 
-   // PERFIL
+   // perfil
     Route::get('/mi-cuenta', function () {
         return view('profile.custom');
     })->name('profile.custom');
 
-  // FAVORITOS
+  // favoritos
     Route::post('/favoritos/{animal}', [FavoritoController::class, 'store'])
         ->name('favoritos.store');
 
@@ -78,7 +77,7 @@ Route::middleware('auth')->group(function () {
          Route::delete('/favoritos/{favorito}', [FavoritoController::class, 'destroy'])
         ->name('favoritos.destroy');
 
-// SOLICITUDES DE ADOPCIÓN
+// Solicitudes adopcion
 // Formulario de preguntas
     Route::get('/solicitar-adopcion/{animal_id}', [SolicitudController::class, 'create'])->name('solicitudes.create');
     // Guardar la solicitud completa
@@ -86,9 +85,9 @@ Route::middleware('auth')->group(function () {
 
 
     /*
-    |-------------------------
-    | PANEL REFUGIO
-    |-------------------------
+    |
+    | Panel refugio
+    |
     */
     Route::middleware('can:refugio')->group(function () {
         // Dashboard principal del refugio
@@ -100,7 +99,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/refugio/solicitud/{id}/aceptar', [SolicitudController::class, 'aceptarSolicitud'])->name('solicitudes.aceptar');
         Route::post('/refugio/solicitud/{id}/rechazar', [SolicitudController::class, 'rechazarSolicitud'])->name('solicitudes.rechazar');
 
-        // CRUD animales SOLO refugio
+        // CRUD animales solo refugio
         Route::resource('animales', AnimalController::class)->except(['index', 'show']);
     });
     Route::get('/animales', [AnimalController::class, 'index'])

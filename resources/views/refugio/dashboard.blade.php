@@ -4,98 +4,122 @@
 
 @section('content')
 <div class="contenedor-panel">
+    <!-- Titulo principal del panel -->
     <h1 class="titulo-panel">Panel de Administración</h1>
 
-    {{-- Estadísticas --}}
+    <!-- Tarjetas con el número de solicitudes segun su estado -->
     <div class="estadisticas">
+        <!-- Solicitudes pendients -->
         <div class="tarjeta-estadistica pendiente">
             <h3>{{ $pendientes }}</h3>
             <p>Pendientes</p>
         </div>
+
+        <!-- Solicitudes aceptadas -->
         <div class="tarjeta-estadistica aceptada">
             <h3>{{ $aceptadas }}</h3>
             <p>Aceptadas</p>
         </div>
+
+        <!-- Solicitudes rechazadas -->
         <div class="tarjeta-estadistica rechazada">
             <h3>{{ $rechazadas }}</h3>
             <p>Rechazadas</p>
         </div>
     </div>
 
+    <!-- Subtitulo -->
     <h2 class="subtitulo-panel">Solicitudes de Adopción</h2>
 
-    {{-- Tabs de filtrado --}}
+    <!-- Botones para filtrar las solicitudes -->
     <div class="tabs-filtro">
+        <!-- Muestra todas las solicitudes -->
         <button class="tab-boton activo" onclick="filtrarPor('todas')">Todas ({{ $solicitudes->count() }})</button>
+        <!-- Solo pendientes -->
         <button class="tab-boton" onclick="filtrarPor('pendiente')">Pendientes ({{ $pendientes }})</button>
+        <!-- Solo aceptadas -->
         <button class="tab-boton" onclick="filtrarPor('aceptada')">Aceptadas ({{ $aceptadas }})</button>
+        <!-- Solo rechazadas -->
         <button class="tab-boton" onclick="filtrarPor('rechazada')">Rechazadas ({{ $rechazadas }})</button>
     </div>
 
-    {{-- Lista de solicitudes --}}
+    <!-- Lista de solicitudws -->
     <div class="lista-solicitudes">
+        <!-- Recorre todas las solicitudes -->
         @forelse($solicitudes as $solicitud)
+        <!-- Tarjeta individual -->
         <div class="tarjeta-solicitud" data-estado="{{ $solicitud->estado }}">
+            <!-- Encabezado -->
             <div class="encabezado-solicitud">
                 <div class="info-basica">
-                    <img src="{{ asset('storage/' . $solicitud->animal->foto) }}"
-                        alt="{{ $solicitud->animal->nombre }}"
-                        class="foto-mini">
                     <div>
+                        <!-- Nombre del animal -->
                         <h3>{{ $solicitud->animal->nombre }}</h3>
+                        <!-- Raza y edad -->
                         <p class="texto-secundario">{{ $solicitud->animal->raza }} - {{ $solicitud->animal->edad }} años</p>
                     </div>
                 </div>
+                <!-- Etiqueta visual del estado -->
                 <span class="etiqueta-estado {{ $solicitud->estado }}">
+                    <!-- Si está pendiente -->
                     @if($solicitud->estado === 'pendiente') Pendiente
+                    <!-- Si está aceptada -->
                     @elseif($solicitud->estado === 'aceptada') Aceptada
+                    <!-- Si no, rechazada -->
                     @else Rechazada
                     @endif
                 </span>
             </div>
-
+            <!-- Contenido de la solicitud -->
             <div class="cuerpo-solicitud">
+                <!-- Información principal -->
                 <div class="fila-info">
+                    <!-- Nombre del solicitante -->
                     <div class="columna-info">
                         <strong>Solicitante:</strong>
                         <p>{{ $solicitud->nombre_completo }}</p>
                     </div>
+                    <!-- Email -->
                     <div class="columna-info">
                         <strong>Email:</strong>
+                        <!-- Si no existe email muestra "Sin email" -->
                         <p>{{ $solicitud->user->email ?? 'Sin email' }}</p>
                     </div>
+                    <!-- Telefono -->
                     <div class="columna-info">
                         <strong>Teléfono:</strong>
                         <p>{{ $solicitud->datos_contacto }}</p>
                     </div>
                 </div>
 
-
+                <!-- Motivo de adopción -->
                 <div class="info-detalle">
                     <strong>Motivo de adopción:</strong>
                     <p>{{ $solicitud->motivo }}</p>
                 </div>
 
+                <!-- Solo aparece si está rechazada y tiene mensaje -->
                 @if($solicitud->estado === 'rechazada' && $solicitud->mensaje_rechazo)
                 <div class="mensaje-rechazo">
                     <strong>Motivo del rechazo:</strong>
                     <p>{{ $solicitud->mensaje_rechazo }}</p>
                 </div>
                 @endif
-
+                <!-- Fecha -->
                 <p class="fecha-solicitud"> Solicitado el {{ $solicitud->created_at->format('d/m/Y H:i') }}</p>
             </div>
 
-            {{-- Botones de acción solo para pendientes --}}
+           
             @if($solicitud->estado === 'pendiente')
             <div class="acciones-solicitud">
+                 <!-- Formulario aceptar -->
                 <form method="POST" action="{{ route('solicitudes.aceptar', $solicitud->id) }}" style="display: inline;">
-                    @csrf
+                    @csrf <!-- Token de seguridad -->
                     <button type="submit" class="boton-aceptar" onclick="return confirm('¿Aceptar esta solicitud?')">
                         Aceptar
                     </button>
                 </form>
-
+   <!-- Formulario rechazar -->
                 <form action="{{ route('solicitudes.rechazar', $solicitud->id) }}" method="POST" style="display:inline;">
                     @csrf
                     <button class="boton-rechazar" type="submit" class="btn-rechazar" onclick="return confirm('¿Estás seguro de que quieres rechazar esta solicitud?')">
@@ -105,6 +129,7 @@
             </div>
             @endif
         </div>
+        <!-- Si no hay solicitudes -->
         @empty
         <div class="sin-solicitudes">
             <p>No hay solicitudes registradas</p>
@@ -115,12 +140,14 @@
 
 
 <style>
+     /* Contenedor principal */
     .contenedor-panel {
         max-width: 1400px;
         margin: 0 auto;
         padding: 2rem;
     }
 
+      /* Título */
     .titulo-panel {
         font-family: 'Cormorant', serif;
         font-size: 2.5rem;
@@ -129,7 +156,7 @@
         text-align: center;
     }
 
-    /* ESTADÍSTICAS */
+    /* estadisticas */
     .estadisticas {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -169,7 +196,7 @@
         color: var(--beige-600);
     }
 
-    /* TABS */
+    /* tabs */
     .subtitulo-panel {
         font-family: 'Cormorant', serif;
         font-size: 2rem;
@@ -204,7 +231,7 @@
         border-color: var(--accent);
     }
 
-    /* SOLICITUDES */
+    /* soliicitudes */
     .lista-solicitudes {
         display: flex;
         flex-direction: column;
@@ -327,7 +354,7 @@
         margin-top: 0.5rem;
     }
 
-    /* ACCIONES */
+    /* acciones */
     .acciones-solicitud {
         display: flex;
         gap: 1rem;
@@ -367,7 +394,7 @@
         transform: translateY(-2px);
     }
 
-    /* MODAL */
+    /* modal */
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -492,17 +519,23 @@
 </style>
 
 <script>
+     // Función para filtrar solicitudes
     function filtrarPor(estado) {
+          // Obtiene todas las tarjetas
         const solicitudes = document.querySelectorAll('.tarjeta-solicitud');
+       // Obtiene todos los botones
         const botones = document.querySelectorAll('.tab-boton');
 
-        // Actualizar botones activos
+        // Quita la clase activo de todos
         botones.forEach(btn => btn.classList.remove('activo'));
+         // Añade activo al botón pulsado
         event.target.classList.add('activo');
 
-        // Filtrar solicitudes
+          // Recorre todas las solicitudes
         solicitudes.forEach(solicitud => {
+            // Si el filtro es "todas"
             if (estado === 'todas') {
+                 // Muestra todas
                 solicitud.style.display = 'block';
             } else {
                 solicitud.style.display = solicitud.dataset.estado === estado ? 'block' : 'none';

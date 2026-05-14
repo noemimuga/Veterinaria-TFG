@@ -62,7 +62,7 @@
                     </div>
                     <div class="info-item">
                         <span class="icon">📞</span>
-                        <p><strong>Teléfono:</strong> +34 123 456 789</p>
+                        <p><strong>Teléfono:</strong> +34 666 888 666</p>
                     </div>
                     <div class="info-item">
                         <span class="icon">✉️</span>
