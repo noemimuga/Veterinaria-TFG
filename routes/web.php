@@ -40,8 +40,8 @@ Route::view('/aviso-legal', 'legal')->name('legal');
 |--------------------------------------------------------------------------
 */
 
-Route::resource('animales', AnimalController::class)
-    ->only(['index', 'show']);
+//Route::resource('animales', AnimalController::class)
+    //->only(['index', 'show']);
 /*
 |--------------------------------------------------------------------------
 | CAMBIO DE IDIOMA
@@ -78,7 +78,7 @@ Route::middleware('auth')->group(function () {
          Route::delete('/favoritos/{favorito}', [FavoritoController::class, 'destroy'])
         ->name('favoritos.destroy');
 
-// SOLICITUDES DE ADOPCIÓN 
+// SOLICITUDES DE ADOPCIÓN
 // Formulario de preguntas
     Route::get('/solicitar-adopcion/{animal_id}', [SolicitudController::class, 'create'])->name('solicitudes.create');
     // Guardar la solicitud completa
@@ -99,17 +99,22 @@ Route::middleware('auth')->group(function () {
        Route::get('/refugio/solicitudes', [SolicitudController::class, 'index'])->name('solicitudes.index');
         Route::post('/refugio/solicitud/{id}/aceptar', [SolicitudController::class, 'aceptarSolicitud'])->name('solicitudes.aceptar');
         Route::post('/refugio/solicitud/{id}/rechazar', [SolicitudController::class, 'rechazarSolicitud'])->name('solicitudes.rechazar');
-        
+
         // CRUD animales SOLO refugio
         Route::resource('animales', AnimalController::class)->except(['index', 'show']);
     });
+    Route::get('/animales', [AnimalController::class, 'index'])
+    ->name('animales.index');
+
+    Route::get('/animales/{animal}', [AnimalController::class, 'show'])
+        ->name('animales.show');
 });
 
 
 
 /*
 |--------------------------------------------------------------------------
-| AUTH 
+| AUTH
 |--------------------------------------------------------------------------
 */
 
