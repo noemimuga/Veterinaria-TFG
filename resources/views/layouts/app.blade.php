@@ -616,6 +616,7 @@
                 </li>
                 @else
                 <li><a href="{{ route('contacto.index') }}">Contacto</a></li>
+                <a href="{{ route('register') }}" class="btn">Registrarse</a>
                 <li><a href="{{ route('login') }}" class="btn-primary">Iniciar Sesión</a></li>
                 @endauth
 

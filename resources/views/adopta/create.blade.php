@@ -98,14 +98,14 @@
     outline: none;
     font-size: 14px;
 
-    box-sizing: border-box; /* 👈 CLAVE */
+    box-sizing: border-box; 
    }
 </style>
 </head>
 <body>
 
 <header>
-    <h2>🐾 Añadir animal</h2>
+    <h2 Añadir animal</h2>
     <nav>
         <a href="/">Inicio</a>
         <a href="/animales">Animales</a>
@@ -116,7 +116,7 @@
 
     <div class="card">
 
-        <h2>🐾 Añadir nuevo animal</h2>
+        <h2> Añadir nuevo animal</h2>
 
         <form action="{{ route('animales.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
