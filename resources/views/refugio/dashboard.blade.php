@@ -57,6 +57,10 @@
                         <h3>{{ $solicitud->animal->nombre }}</h3>
                         <!-- Raza y edad -->
                         <p class="texto-secundario">{{ $solicitud->animal->raza }} - {{ $solicitud->animal->edad }} años</p>
+                        <a href="{{ route('animales.edit', $solicitud->animal->id) }}" class="boton-editar-animal">
+                    
+                            Editar Animal
+                        </a>
                     </div>
                 </div>
                 <!-- Etiqueta visual del estado -->
@@ -109,17 +113,17 @@
                 <p class="fecha-solicitud"> Solicitado el {{ $solicitud->created_at->format('d/m/Y H:i') }}</p>
             </div>
 
-           
+
             @if($solicitud->estado === 'pendiente')
             <div class="acciones-solicitud">
-                 <!-- Formulario aceptar -->
+                <!-- Formulario aceptar -->
                 <form method="POST" action="{{ route('solicitudes.aceptar', $solicitud->id) }}" style="display: inline;">
                     @csrf <!-- Token de seguridad -->
                     <button type="submit" class="boton-aceptar" onclick="return confirm('¿Aceptar esta solicitud?')">
                         Aceptar
                     </button>
                 </form>
-   <!-- Formulario rechazar -->
+                <!-- Formulario rechazar -->
                 <form action="{{ route('solicitudes.rechazar', $solicitud->id) }}" method="POST" style="display:inline;">
                     @csrf
                     <button class="boton-rechazar" type="submit" class="btn-rechazar" onclick="return confirm('¿Estás seguro de que quieres rechazar esta solicitud?')">
@@ -140,14 +144,14 @@
 
 
 <style>
-     /* Contenedor principal */
+    /* Contenedor principal */
     .contenedor-panel {
         max-width: 1400px;
         margin: 0 auto;
         padding: 2rem;
     }
 
-      /* Título */
+    /* Título */
     .titulo-panel {
         font-family: 'Cormorant', serif;
         font-size: 2.5rem;
@@ -519,23 +523,23 @@
 </style>
 
 <script>
-     // Función para filtrar solicitudes
+    // Función para filtrar solicitudes
     function filtrarPor(estado) {
-          // Obtiene todas las tarjetas
+        // Obtiene todas las tarjetas
         const solicitudes = document.querySelectorAll('.tarjeta-solicitud');
-       // Obtiene todos los botones
+        // Obtiene todos los botones
         const botones = document.querySelectorAll('.tab-boton');
 
         // Quita la clase activo de todos
         botones.forEach(btn => btn.classList.remove('activo'));
-         // Añade activo al botón pulsado
+        // Añade activo al botón pulsado
         event.target.classList.add('activo');
 
-          // Recorre todas las solicitudes
+        // Recorre todas las solicitudes
         solicitudes.forEach(solicitud => {
             // Si el filtro es "todas"
             if (estado === 'todas') {
-                 // Muestra todas
+                // Muestra todas
                 solicitud.style.display = 'block';
             } else {
                 solicitud.style.display = solicitud.dataset.estado === estado ? 'block' : 'none';
