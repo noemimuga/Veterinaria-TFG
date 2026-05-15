@@ -6,7 +6,7 @@
 
 <div class="create-container">
 
-    <h1 class="title">🐶 Añadir nuevo animal</h1>
+    <h1 class="title">Añadir nuevo animal</h1>
 
     <div class="form-card">
 
@@ -45,6 +45,16 @@
             <div class="form-group">
                 <label>Descripción</label>
                 <textarea name="descripcion" rows="4">{{ old('descripcion') }}</textarea>
+            </div>
+
+            {{-- SEXO --}}
+            <div class="form-group">
+                <label>Sexo</label>
+                <select name="sexo" required>
+                    <option value="">Selecciona</option>
+                    <option value="hembra">Hembra</option>
+                    <option value="macho">Macho</option>
+                </select>
             </div>
 
             {{-- FOTO --}}

@@ -24,10 +24,10 @@
             <div class="card">
 
                 @if($fav->animal->foto)
-                    <img src="{{ asset('storage/' . $fav->animal->foto) }}" alt="{{ $fav->animal->nombre }}">
+                    <img src="{{ asset('storage/' . $animal->foto) }}" alt="{{ $animal->nombre }}">
                 @else
                     <div style="height:250px; display:flex; align-items:center; justify-content:center; background:#f5f1ea;">
-                        🐾
+                        <p>Este animal no tiene foto</p>
                     </div>
                 @endif
 
